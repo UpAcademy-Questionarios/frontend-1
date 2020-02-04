@@ -12,6 +12,7 @@ import { faAngleDoubleDown, faAngleDoubleUp, faThumbsDown } from '@fortawesome/f
 export class ViewComponent implements OnInit {
 
   private currentQuestionnaire: Questionnaire;
+  private questUserName: string;
   faAngleDoubleDown = faAngleDoubleDown;
   faAngleDoubleUp = faAngleDoubleUp;
 
@@ -19,8 +20,9 @@ export class ViewComponent implements OnInit {
     private router: Router,
     private questionnaireService: QuestionnaireService,
   ) {
-    let questionnaireId: number = this.router.getCurrentNavigation().extras.state.id;
-    this.questionnaireService.getQuestionnaire(questionnaireId).subscribe(
+    let questionnairePreview = this.router.getCurrentNavigation().extras.state.quest;
+    this.questUserName = questionnairePreview.userName;
+    this.questionnaireService.getQuestionnaire(questionnairePreview.id).subscribe(
       (currentQuestionnaire: Questionnaire) => {
         currentQuestionnaire.questionList.sort((a, b) => (a.id > b.id) ? 1 : ((b.id > a.id) ? -1 : 0));
         currentQuestionnaire.answerList.sort((a, b) => (a.questionId > b.questionId) ? 1 : ((b.questionId > a.questionId) ? -1 : 0))

@@ -5,6 +5,7 @@ export class Account {
     'pendingQuestionnaires': Questionnaire[];
     'createDate': number;
     'lastModifiedDate': number;
+    'userAcademies': number[];
 
     constructor(data?: any) {
         Object.assign(this, data);
