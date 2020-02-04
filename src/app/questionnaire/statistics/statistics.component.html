@@ -5,8 +5,11 @@
 <div *ngFor="let questionnaire of questionnaireData">
     <div [ngStyle]="{'color': questionnare?.score > 70 ? 'green':'red'}">{{questionnaire.name}} -- {{questionnaire.score}}</div>
 </div>
-  <div class="d3BarChart">
-    <app-pie-graph [data]="passedScore"></app-pie-graph>
-  </div>
 
-  <button (click)="showStuff()"></button>
+<div class="slidecontainer">
+    <input (ngModelChange)="onChange(device.value)" #device [(ngModel)]="rangeValue" type="range" min="1" max="100" value="50" class="slider" id="myRange">
+  </div>
+  <div>{{rangeValue}}</div>
+  <div class="d3BarChart float-right" style="bottom: 0;">
+    <app-pie-graph  [trashold]="rangeValue" [data]="passedScore"></app-pie-graph>
+  </div>
