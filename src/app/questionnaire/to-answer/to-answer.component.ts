@@ -53,9 +53,6 @@ export class ToAnswerComponent implements OnInit {
         for (let i = 0; i < this.currentQuestionnaire.answerList.length; i++) {
           this.currentQuestionnaire.answerList[i].answer = [];
         }
-        this.currentQuestionnaire.targetAcademies = this.accountService.getCurrentAccount().userAcademies;
-        console.log(this.currentQuestionnaire.targetAcademies);
-        
         this.showToastSuccess("Questionário enviado com sucesso");
         this.router.navigate(['/questionario/pendentes']);
       }, (error: string) => {
