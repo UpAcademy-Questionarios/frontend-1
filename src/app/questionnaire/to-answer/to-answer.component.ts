@@ -6,6 +6,7 @@ import { UserServiceService } from 'src/app/core/services/user-service/user-serv
 import { faAngleDoubleDown, faAngleDoubleUp } from '@fortawesome/free-solid-svg-icons';
 import { Answer } from '../models/answer/answer';
 import { ToastrService } from 'ngx-toastr';
+import { AccountService } from '../services/account-service/account.service';
 
 @Component({
   selector: 'app-to-answer',
@@ -24,6 +25,7 @@ export class ToAnswerComponent implements OnInit {
     private router: Router,
     private questionnaireService: QuestionnaireService,
     private userService: UserServiceService,
+    private accountService: AccountService,
     private toastr: ToastrService
   ) {
     this.userName = userService.getCurrentName();
@@ -51,6 +53,9 @@ export class ToAnswerComponent implements OnInit {
         for (let i = 0; i < this.currentQuestionnaire.answerList.length; i++) {
           this.currentQuestionnaire.answerList[i].answer = [];
         }
+        this.currentQuestionnaire.targetAcademies = this.accountService.getCurrentAccount().userAcademies;
+        console.log(this.currentQuestionnaire.targetAcademies);
+        
         this.showToastSuccess("Questionário enviado com sucesso");
         this.router.navigate(['/questionario/pendentes']);
       }, (error: string) => {
