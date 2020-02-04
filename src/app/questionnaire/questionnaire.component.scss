@@ -1,19 +1,19 @@
-@media (min-width: 320px) and (max-width: 480px) {
-  div.app-sidebar{
-    height: 100vh; min-width: 64px; max-width: 190px;
-  }
-  div.router-outlet{
-    width: auto; min-width: 18vh; height: 100vh; padding-left: 5%; padding-right: 5%;  margin-left: 20vh;
-}
-}
+// @media (min-width: 320px) and (max-width: 480px) {
+//   div.app-sidebar{
+//     height: 100vh; min-width: 64px; max-width: 190px;
+//   }
+//   div.router-outlet{
+//     width: auto; min-width: vh; height: 100vh; padding-left: 5%; padding-right: 5%;  margin-left: 20vh;
+// }
+// }
 
-@media (min-width: 1025px) and (max-width: 1280px) {
-  div.app-sidebar{
-    height: 100vh; min-width: 64px; max-width: 190px;
-  }
-  div.router-outlet{
-    width: auto; min-width: 18vh; height: 100vh; padding-left: 5%; padding-right: 5%;  margin-left: 20vh;
-  }
-  //CSS
+// @media (min-width: 1025px) and (max-width: 1280px) {
+//   div.app-sidebar{
+//     height: 100vh; min-width: 64px; max-width: 190px;
+//   }
+//   div.router-outlet{
+//     width: auto; min-width: 18vh; height: 100vh; padding-left: 5%; padding-right: 5%;  margin-left: 20vh;
+//   }
+//   //CSS
 
-}
+// }

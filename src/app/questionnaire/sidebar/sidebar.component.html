@@ -24,39 +24,61 @@
         <span class="divider"></span>
         <ul class="navigation">
             <li id="questPending">
-                <a [ngClass]="{'active': pending}" (click)="pending=true; history=false; newFile=false; template=false; statistics=false " routerLink="/questionario/pendentes" href="#"><i>
+                <a [ngClass]="{'active': pending}" (click)="hideNewFileTemplate=true; new=false;pending=true; history=false; newFile=false; template=false; statistics=false " routerLink="/questionario/pendentes" href="#"><i>
                 <fa-icon style=" width: 20; height: 16; margin-right: 10%;"[icon]="faQuestion"></fa-icon>
                 </i><span>Pendentes</span></a>
             </li>
             <li id="questHistory">
-                <a  [ngClass]="{'active': history}" (click)="pending=false; history=true; newFile=false; template=false; statistics=false" routerLink="/questionario/historico" href="#"><i>
+                <a  [ngClass]="{'active': history}" (click)="hideNewFileTemplate=true; new=false; pending=false; history=true; newFile=false; template=false; statistics=false" routerLink="/questionario/historico" href="#"><i>
                 <fa-icon style=" width: 20; height: 16; margin-right: 6%;"[icon]="faHistory"></fa-icon>
                 </i><span>Histórico</span></a>
             </li>
 
             <li id="questStatistics">
-                <a   routerLink="/questionario/estatisticas"  [ngClass]="{'active': statistics}" (click)="pending=false; history=false; statistics=true;"  href="#"><i>
+                <a   routerLink="/questionario/estatisticas"  [ngClass]="{'active': statistics}" (click)="hideNewFileTemplate=true; new=false; pending=false; history=false; statistics=true;"  href="#"><i>
                 <fa-icon style=" width: 20; height: 16; margin-right: 0.3rem"[icon]="faChartPie"></fa-icon>
                 </i><span>Estatisticas</span></a>
                 <span class="divider"></span>
             </li>
-            <li id="questNew"  style="padding: 0;" *ngIf="showSideBar" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
+            <!-- <li id="questNew"  style="padding: 0;" *ngIf="showSideBar" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
               class="dropdown nav-link" dropdown triggers="" #dp="bs-dropdown" role="menu"
                 >
                 <a  style="cursor: pointer;" (click)="new = !new" class="dropdown-toggle dropdown"
                     data-toggle="dropdown" dropdownToggle><i>
                 <fa-icon style=" width: 20; height: 16; margin-right: 7%;"[icon]="faPlusSquare"></fa-icon>
                 </i><span>Criar</span></a>
-                <div id="navbardrop" class="dropdown-menu dropdown-menu-center" [ngStyle]="{'left' : new ? '0px' : '0px' }"  *dropdownMenu> <!-- ver expand drop [ngStyle]="{'left' : new ? '0px' : '0px' } -->
+                <div id="navbardrop" class="dropdown-menu dropdown-menu-center" [*dropdownMenu> 
                     <a id="droppNew" [ngClass]="{'active': newFile}" (click)="pending=false; history=false; newFile=true; template=false; statistics=false " class="menu-item" href="#new" routerLink="/questionario/novo">
                         <fa-icon style=" width: 20; height: 16; margin-right: 6px"[icon]="faFile"></fa-icon> <span>Novo</span>
                     </a>
                     <a id="dropTemplate" [ngClass]="{'active': template}"  (click)="pending=false; history=false; newFile=false; template=true; statistics=false " class="menu-item" href="#template" routerLink="/questionario/template">
                         <fa-icon style=" width: 20; height: 16; margin-right: 6px"[icon]="faFileAlt"></fa-icon><span>Template</span>
                     </a>
-                </div>
+                </div>s
                 <span  class="divider "></span>
+            </li> -->
+
+
+            <li id="questNew"  *ngIf="showSideBar" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
+                >
+                <a  style="cursor: pointer;"  (click)="new = !new; hideNewFileTemplate=!hideNewFileTemplate; pending=false; history=false; newFile=true; template=false; statistics=false " ><i>
+                <fa-icon style=" width: 20; height: 16; margin-right: 6%;"[icon]="faPlusSquare"></fa-icon>
+                </i><span>Criar</span><i><fa-icon style="margin-left: 0.3rem;" [icon]="new ? faCaretUp : faCaretDown "></fa-icon></i></a>
             </li>
+
+                <li id="newFile" > 
+                    <a  [ngClass]="{'active': newFile, 'hidden' : hideNewFileTemplate}" (click)=" pending=false; history=false; newFile=true; template=false; statistics=false " routerLink="/questionario/novo"><i>
+                        <fa-icon style=" width: 20; height: 16; margin-right: 6px"[icon]="faFile"></fa-icon></i> <span>Novo</span>
+                    </a>
+                </li>
+                <li id="template"> 
+                    <a [ngClass]="{'active': template, 'hidden' : hideNewFileTemplate}"  (click)=" pending=false; history=false; newFile=false; template=true; statistics=false "  href="#template" routerLink="/questionario/template"><i>
+                        <fa-icon style=" width: 20; height: 16; margin-right: 6px"[icon]="faFileAlt"></fa-icon></i><span>Template</span>
+                    </a>
+                </li>
+                <span  class="divider " [ngClass]="{'hidden' : hideNewFileTemplate}"></span>
+        
+            
 
 
 
@@ -65,7 +87,7 @@
               <div class="container fixed-bottom" style=" margin: 0; padding-left: 0; padding-right: 0; bottom: 1.8rem; "  >
               <span class="divider" style=" width:auto; "></span>
             </div>
-            </li>
+         
 
       </ul>
 
