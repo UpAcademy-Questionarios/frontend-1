@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UserServiceService } from 'src/app/core/services/user-service/user-service.service';
 import { Router } from '@angular/router';
 import { BsDropdownConfig } from 'ngx-bootstrap';
-import { faExpandAlt, faCompressAlt, faQuestion, faHistory, faFile, faFileAlt, faPlusSquare, faChartPie} from '@fortawesome/free-solid-svg-icons';
+import { faCaretDown,faCaretUp, faExpandAlt, faCompressAlt, faQuestion, faHistory, faFile, faFileAlt, faPlusSquare, faChartPie} from '@fortawesome/free-solid-svg-icons';
 
 
 @Component({
@@ -22,8 +22,9 @@ export class SidebarComponent implements OnInit {
   faFileAlt = faFileAlt;
   faPlusSquare = faPlusSquare;
   faChartPie = faChartPie;
+  faCaretUp = faCaretUp;
+  faCaretDown = faCaretDown;
 
-  public pushStatsDown = false;
   public collapsed = false;
   public new = false;
   public newFile = false;
@@ -36,6 +37,7 @@ export class SidebarComponent implements OnInit {
   public adminImg: string;
   public superUserImg: string;
   public userImg: string;
+  public hideNewFileTemplate = true;
 
   constructor(
     private userApi: UserServiceService,

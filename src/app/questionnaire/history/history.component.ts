@@ -6,6 +6,8 @@ import { Questionnaire } from '../models/questionnaire/questionnaire';
 import { UserServiceService } from 'src/app/core/services/user-service/user-service.service';
 import { Router } from '@angular/router';
 import { User } from 'src/app/core/models/user';
+import { faSearch} from '@fortawesome/free-solid-svg-icons';
+
 
 @Component({
   selector: 'app-history',
@@ -14,6 +16,7 @@ import { User } from 'src/app/core/models/user';
 })
 export class HistoryComponent implements OnInit {
 
+  private emptyHistory = false;
  private user: User;
   private account: Account;
   private currentRole : string;
@@ -31,6 +34,7 @@ export class HistoryComponent implements OnInit {
     this.reverse = !this.reverse;
   }
   // sort
+  faSearch = faSearch;
 
   constructor(
     private questService: QuestionnaireService,
@@ -47,6 +51,7 @@ export class HistoryComponent implements OnInit {
     this.viewName();
     this.getCurrentRole();
     this.chooseGet();
+    
     //this.getQuestionnaires();
   }
   public getCurrentUser() {
@@ -56,6 +61,7 @@ export class HistoryComponent implements OnInit {
   public getQuestionnaires() {
     this.questService.getAnsweredQuestionnaireByAccountId(this.account.id).subscribe((history: Questionnaire[]) => {
       this.history = history; console.log(history);
+      this.historyEmpty();
       // this.showView();
     });
   }
@@ -66,6 +72,7 @@ export class HistoryComponent implements OnInit {
   public viewAllQuestionnaires(role: string){
     this.questService.getAllAnsweredQuestionnaireByRole(role).subscribe((allHistory: Questionnaire[]) => {
       this.allHistory = allHistory; console.log(allHistory)
+      this.historyEmpty();
     })
   }
 
@@ -78,19 +85,6 @@ public chooseGet() {
 }
 
   public showView(data: string[]) {
-    // this.history.forEach(element => {
-    //   element.viewPrivacy.includes(this.getCurrentUser().role);
-    // })
-    // this.showStatsBtn = true;
-
-    // for (let i = 0; i < this.history.length; i++) {
-    //   if (this.history[i].viewPrivacy.includes(this.getCurrentUser().role)) {
-    //     this.showViewBtn[i] = true
-    //   } else {
-    //     this.showViewBtn[i] = false
-    //   }
-    //   console.log(this.showViewBtn)
-    // }
     for (let i = 0; i < data.length; i++) {
       if (data[i].includes(this.getCurrentUser().role)) {
         return true;
@@ -107,7 +101,6 @@ public chooseGet() {
   public viewThisQuestionnaire(questionnaire: Questionnaire) {
     this.router.navigate(['/questionario/historico/ver'], { state: { quest: questionnaire }, });
     console.log(questionnaire);
-    
   }
 
   public dateChange(data: Questionnaire) {
@@ -126,6 +119,12 @@ public chooseGet() {
   public viewName() {
     if (this.userService.isAdmin() || this.userService.isSuperUser()) {
       this.viewNameQuest = true;
+    }
+  }
+
+  public historyEmpty(){
+    if(this.allHistory.length == 0 || this.history.length  == 0){
+     this.emptyHistory = true;
     }
   }
 }
