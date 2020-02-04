@@ -56,7 +56,7 @@ export class QuestionnaireService {
   }
 
   public getAllAnsweredQuestionnaireByRole(role: string){
-    return this.http.get(this.url + role);
+    return this.http.get(this.url + 'role/' + role);
   }
 
   // Ir buscar

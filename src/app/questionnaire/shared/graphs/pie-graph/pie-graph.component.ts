@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, Input } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Input, OnChanges } from '@angular/core';
 import * as d3 from 'd3';
 
 
@@ -7,14 +7,15 @@ import * as d3 from 'd3';
   templateUrl: './pie-graph.component.html',
   styleUrls: ['./pie-graph.component.scss']
 })
-export class PieGraphComponent implements OnInit {
+export class PieGraphComponent implements OnInit, OnChanges {
 
   @ViewChild('chart', { static: true }) private chartContainer: ElementRef<HTMLElement>;
   //public data: any = { fail: 2, notfinish: 4, pass: 9 };
   @Input() private data: any;
+  @Input() private trashold: number;
   private margin: any = { top: 20, bottom: 20, left: 20, right: 20 };
-  private width = 400;
-  private height = 400;
+  private width = 300;
+  private height = 300;
 
   private radius: any;
   private svg: any;
@@ -27,6 +28,20 @@ export class PieGraphComponent implements OnInit {
 
   ngOnInit() {
     //this.draw();
+    //window.addEventListener('resize', this.resize.bind(this))
+  }
+
+  // private resize(){
+  //   this.setSVGDimensions();
+  // }
+
+  ngOnChanges(){
+    console.log("mudou")
+    if (this.data) {
+      d3.selectAll("svg").remove();
+    this.draw();
+    }
+    
   }
 
   draw() {
@@ -57,7 +72,7 @@ export class PieGraphComponent implements OnInit {
       .enter()
       .append('path')
       .attr('d', d3.arc()
-        .innerRadius(100)
+        .innerRadius(0)
         .outerRadius(this.radius))
       .attr('fill', (d) => (this.color(d.data.key)))
       .attr('stroke', 'black')

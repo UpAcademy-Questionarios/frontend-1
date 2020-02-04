@@ -3,9 +3,9 @@
         <h1 class="text-center">{{currentQuestionnaire?.name}}</h1>
 
         <!-- Colocar o nome do user que vem no questionário -->
-        <div>Nome: nome do User</div>
-        <div>Respondido em: {{ currentQuestionnaire?.lastModifiedDate | date:'dd/MM/yyyy, HH:mm:ss' }}</div>
-        <h5><span class="badge badge-secondary" *ngIf="currentQuestionnaire?.qType=='QUIZ'">Nota: {{currentQuestionnaire?.score}}%</span></h5>
+        <small>Nome: {{questUserName}}</small><br>
+        <small>Respondido em: {{ currentQuestionnaire?.lastModifiedDate | date:'dd/MM/yyyy, HH:mm:ss' }}</small><br>
+        <b><span class="badge badge-secondary" *ngIf="currentQuestionnaire?.qType=='QUIZ'">Nota: {{currentQuestionnaire?.score}}%</span></b>
     </div>
 
     <div>

@@ -1,6 +1,5 @@
 <div class="d3-chart" #chart></div>
 <ul class="labels">
-  <li style="color: green;"> &#62; 70% : {{data?.aprovados}}</li>
-  <li style="color: red;"> &#60; 70% : {{data?.reprovados}}</li>
+  <li style="color: green;"> &#62; {{trashold}}% : {{data?.aprovados}}</li>
+  <li style="color: red;"> &#60; {{trashold}}% : {{data?.reprovados}}</li>
 </ul>
-<button (click)="draw()">DRAW</button>
