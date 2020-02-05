@@ -75,6 +75,7 @@ export class NewQuestionnaireComponent implements OnInit {
     this.customHtml = "";
     for (let index = begin; index <= end; index++) {
       this.currentQuestion.options.push(String(index));
+      if (this.quiz) this.currentQuestion.rightAnswer.push("false");
     }
   }
 
@@ -131,6 +132,10 @@ export class NewQuestionnaireComponent implements OnInit {
 
     for (let index = 0; index < this.currentQuestionnaire.viewPrivacy.length; index++) {
       this.currentQuestionnaire.viewPrivacy[index] = this.currentQuestionnaire.viewPrivacy[index].role      
+    }
+
+    for (let index = 0; index < this.trainees.length; index++) {
+      this.trainees[index] = this.trainees[index].id      
     }
 
 
