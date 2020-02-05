@@ -10,14 +10,21 @@ import { faSearch} from '@fortawesome/free-solid-svg-icons';
 import { faTimesCircle} from '@fortawesome/free-solid-svg-icons';
 
 
-
-
 @Component({
   selector: 'app-history',
   templateUrl: './history.component.html',
   styleUrls: ['./history.component.scss']
 })
 export class HistoryComponent implements OnInit {
+
+  constructor(
+    private questService: QuestionnaireService,
+    private userService: UserServiceService,
+    private accountService: AccountService,
+    private router: Router
+  ) {
+    this.account = accountService.getCurrentAccount();
+  }
 
   private emptyHistory = false;
  private user: User;
@@ -32,21 +39,12 @@ export class HistoryComponent implements OnInit {
   // sort
   key = 'name'; // set default
   reverse = false;
-  sort(key) {
-    this.key = key;
-    this.reverse = !this.reverse;
-  }
   // sort
   faSearch = faSearch;
   faTimesCircle = faTimesCircle;
-
-  constructor(
-    private questService: QuestionnaireService,
-    private userService: UserServiceService,
-    private accountService: AccountService,
-    private router: Router
-  ) {
-    this.account = accountService.getCurrentAccount();
+  sort(key) {
+    this.key = key;
+    this.reverse = !this.reverse;
   }
 
   ngOnInit(
@@ -55,8 +53,6 @@ export class HistoryComponent implements OnInit {
     this.viewName();
     this.getCurrentRole();
     this.chooseGet();
-    
-    //this.getQuestionnaires();
   }
   public getCurrentUser() {
     return this.userService.getCurrentUser();
@@ -66,7 +62,6 @@ export class HistoryComponent implements OnInit {
     this.questService.getAnsweredQuestionnaireByAccountId(this.account.id).subscribe((history: Questionnaire[]) => {
       this.history = history; console.log(history);
       this.historyEmpty();
-      // this.showView();
     });
   }
   public getCurrentRole() {
