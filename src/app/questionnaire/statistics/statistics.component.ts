@@ -10,7 +10,10 @@ import { TemplateService } from '../services/template-service/template.service';
 @Component({
   selector: 'app-statistics',
   templateUrl: './statistics.component.html',
-  styleUrls: ['./statistics.component.scss']
+  styleUrls: ['./statistics.component.scss'],
+  host: {
+    class:'w-100'
+  }
 })
 export class StatisticsComponent implements OnInit {
   public quest: Questionnaire;

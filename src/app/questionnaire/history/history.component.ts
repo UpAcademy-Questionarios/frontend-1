@@ -16,7 +16,7 @@ import { faTimesCircle} from '@fortawesome/free-solid-svg-icons';
   styleUrls: ['./history.component.scss'],
   host: {
     class:'w-100'
-}
+  }
 })
 export class HistoryComponent implements OnInit {
 

@@ -11,7 +11,10 @@ import { AccountService } from '../services/account-service/account.service';
 @Component({
   selector: 'app-to-answer',
   templateUrl: './to-answer.component.html',
-  styleUrls: ['./to-answer.component.scss']
+  styleUrls: ['./to-answer.component.scss'],
+  host: {
+    class:'w-100'
+  }
 })
 export class ToAnswerComponent implements OnInit {
 

@@ -7,7 +7,10 @@ import { faAngleDoubleDown, faAngleDoubleUp, faThumbsDown } from '@fortawesome/f
 @Component({
   selector: 'app-view',
   templateUrl: './view.component.html',
-  styleUrls: ['./view.component.scss']
+  styleUrls: ['./view.component.scss'],
+  host: {
+    class:'w-100'
+  }
 })
 export class ViewComponent implements OnInit {
 
