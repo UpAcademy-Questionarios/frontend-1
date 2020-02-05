@@ -17,7 +17,7 @@ export class SuperuserGuard implements CanActivate {
       if (this.userApi.isSuperUser()) {
         return true;
       }else{
-        this.router.navigate(['/']);
+        this.router.navigate(['/questionario/pendentes']);
       };
   }
   

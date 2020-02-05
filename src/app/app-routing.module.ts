@@ -16,7 +16,7 @@ const routes: Routes = [
 
   {
     path: 'dummy',
-    redirectTo: '/questionario/pendentes',
+    redirectTo: '/questionario/historico',
     //loadChildren: () => import('./dummy/dummy.module').then(m => m.DummyModule),
     canActivate: [AuthGuard]
   },
