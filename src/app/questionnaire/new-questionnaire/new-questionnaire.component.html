@@ -9,7 +9,7 @@
   <accordion [isAnimated]="true">
       <accordion-group [isOpen]="isOpenDate">
           <button class="btn btn-link btn-block clearfix" accordion-heading type="button" (click)="isOpenDate=!isOpenDate">
-              <span class="pull-center float-center">Dados do Questionário</span>
+              <span style="color: black;" class="pull-center float-center">Dados do Questionário</span>
             <span class="badge badge-secondary float-right pull-right btn-borderless">
                 <fa-icon size="2x" [icon]="isOpenDate?faAngleDoubleUp:faAngleDoubleDown"></fa-icon>
               </span>
@@ -62,9 +62,9 @@
 
 
       <hr/>
-   <div style="color: #eb9c63;">Adicionar Questões</div>
+   <div style="color: black;">Adicionar Questões</div>
 
-  <div class="row"  
+  <div class="row mx-1"  
   style="border: 1px solid black; border-radius: 5px; background-color: #eb9c63;">
     <div *ngIf="!quiz" class="row col-2" style="border-radius: 5px;">
       <button (click)="multi=true; single=false; open=false; currentQuestion.options=[]; select='MULTIPLE'"
@@ -125,12 +125,12 @@
   </div>
 
 
-  <button class="btn btn-primary mt-3 mb-3" style="background-color: #eb9c63; color: black;" (click)="addQuestion(select)">
+  <button class="btn mt-3 mb-3" style="background-color: #eb9c63; color: black;" (click)="addQuestion(select)">
     Adicionar Pergunta
   </button>
   <hr>
 
-  <div *ngIf="currentQuestionnaire.questionList.length > 0" for="questdata" class="mt-2 mb-2" style="color: rgba(143, 143, 143, 0.742); font: bold;">Questões criadas</div>
+  <div *ngIf="currentQuestionnaire.questionList.length > 0" for="questdata" class="mt-2 mb-2" style="color: black; font: bold;">Questões criadas</div>
 
 
   <accordion [isAnimated]="true">

@@ -16,7 +16,10 @@ import { User } from 'src/app/core/models/user';
   selector: 'app-new-questionnaire',
   templateUrl: './new-questionnaire.component.html',
   styleUrls: ['./new-questionnaire.component.scss'],
-  providers: [{ provide: BsDropdownConfig, useValue: { isAnimated: true, autoClose: true } }]
+  providers: [{ provide: BsDropdownConfig, useValue: { isAnimated: true, autoClose: true } }],
+  host: {
+    class:'w-100'
+}
 })
 export class NewQuestionnaireComponent implements OnInit {
 
