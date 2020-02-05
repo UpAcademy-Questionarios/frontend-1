@@ -1,5 +1,4 @@
-
-<div class="container-flat row mx-auto w-75 my-2">
+<div class="container-flat row mx-auto w-75 my-2 admin-page">
   <div class="container mb-4">
     <button type="button" class="btn-borderless btn-edit" (click)="openModalAddUser(templateAddUser)">
       <fa-icon [icon]="faUserPlus" size="2x"></fa-icon>
@@ -16,7 +15,7 @@
         <input [(ngModel)]="emailField" name="emailField" type="text" class="form-control" placeholder="Email">
       </div>
       <ngx-select [items]="rolesWithAll" [(ngModel)]="roleField" name="roleField" defaultValue={{rolesWithAll[0].id}} class="col-md-3"></ngx-select>
-      <button (click)="getUsers()" type="button" class="btn-borderless col-1"><fa-icon [icon]="faSearch" size="2x"></fa-icon></button>
+      <button (click)="getUsers()" type="button" class="btn-borderless btn-edit col-1"><fa-icon [icon]="faSearch" size="2x"></fa-icon></button>
     </div>
   </form>
 
@@ -34,8 +33,13 @@
   </thead>
   <tbody>
     <tr *ngFor = "let row of users; let i = index;" id="{{i}}">
-      <th ></th>
-      <td *ngFor = "let column of headers">{{row[column]}}</td>
+      <th scope="row"></th>
+      <td *ngFor = "let column of headers; let j = index;">
+        <span *ngIf="j <= 1">{{row[column]}}</span>
+        <span *ngIf="row[column] == 'ADMIN'">Admin</span>
+        <span *ngIf="row[column] == 'USER'">Formando</span>
+        <span *ngIf="row[column] == 'SUPERUSER'">Tutor</span>
+      </td>
       <td>
         <button (click)="openModalUpdateUser(templateUpdateUser, i)" type="button" class="btn-borderless btn-edit">
           <fa-icon [icon]="faEdit" size="lg"></fa-icon>
