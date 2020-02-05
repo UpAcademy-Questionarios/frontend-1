@@ -127,7 +127,7 @@ public chooseGet() {
   }
 
   public historyEmpty(){
-    if(this.allHistory.length == 0 || this.history.length  == 0){
+    if((this.allHistory &&  this.allHistory.length == 0) ||(this.history && this.history.length  == 0)){
      this.emptyHistory = true;
     }
   }
