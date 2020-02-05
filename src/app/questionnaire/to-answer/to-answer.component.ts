@@ -32,10 +32,11 @@ export class ToAnswerComponent implements OnInit {
     let questionnaireId: number = this.router.getCurrentNavigation().extras.state.id;
     this.questionnaireService.getQuestionnaire(questionnaireId).subscribe(
       (currentQuestionnaire: Questionnaire) => {
+        currentQuestionnaire.questionList.sort((a, b) => (a.orderNumber > b.orderNumber) ? 1 : ((b.orderNumber > a.orderNumber) ? -1 : 0));
         this.startingTime = new Date().getTime();
         this.currentQuestionnaire = currentQuestionnaire;
         for (let i = 0; i < this.currentQuestionnaire.questionList.length; i++) {
-          let answer: Answer = new Answer({questionnaireId: this.currentQuestionnaire.id, answer: [], questionId: this.currentQuestionnaire.questionList[i].id});
+          let answer: Answer = new Answer({questionnaireId: this.currentQuestionnaire.id, answer: [], questionId: this.currentQuestionnaire.questionList[i].id, orderNumber: 1 + 1});
           this.currentQuestionnaire.answerList.push(answer);
         }
       });
@@ -45,8 +46,9 @@ export class ToAnswerComponent implements OnInit {
 
   public sendQuestionnaire() {
     this.currentQuestionnaire.answerTime = new Date().getTime() - this.startingTime;
-    console.log(this.currentQuestionnaire.answerTime);
-        
+    // for (let i = 1; i <= this.currentQuestionnaire.answerList.length; i++) {
+    //   this.currentQuestionnaire.answerList[i].orderNumber = i;
+    // }
     this.questionnaireService.updateQuestionnaire(this.currentQuestionnaire).subscribe(
       (msg: string) => {
         console.log(msg);

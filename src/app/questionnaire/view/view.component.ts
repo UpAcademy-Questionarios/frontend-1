@@ -24,8 +24,8 @@ export class ViewComponent implements OnInit {
     this.questUserName = questionnairePreview.userName;
     this.questionnaireService.getQuestionnaire(questionnairePreview.id).subscribe(
       (currentQuestionnaire: Questionnaire) => {
-        currentQuestionnaire.questionList.sort((a, b) => (a.id > b.id) ? 1 : ((b.id > a.id) ? -1 : 0));
-        currentQuestionnaire.answerList.sort((a, b) => (a.questionId > b.questionId) ? 1 : ((b.questionId > a.questionId) ? -1 : 0))
+        currentQuestionnaire.questionList.sort((a, b) => (a.orderNumber > b.orderNumber) ? 1 : ((b.orderNumber > a.orderNumber) ? -1 : 0));
+        currentQuestionnaire.answerList.sort((a, b) => (a.orderNumber > b.orderNumber) ? 1 : ((b.orderNumber > a.orderNumber) ? -1 : 0))
         this.currentQuestionnaire = currentQuestionnaire;
         console.log(this.currentQuestionnaire);
       });

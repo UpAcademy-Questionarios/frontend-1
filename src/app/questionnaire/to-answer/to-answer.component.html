@@ -8,7 +8,7 @@
         <accordion [isAnimated]="true">
             <accordion-group *ngFor="let question of currentQuestionnaire?.questionList; let i = index; let toggle = true;" class="mb-4">
                 <button class="btn btn-link btn-block clearfix" accordion-heading type="button" (click)="toggle=!toggle">
-                    <div class="pull-left float-left">Questão {{i + 1}}: {{question.question}}</div>
+                    <div class="pull-left float-left">Questão {{question.orderNumber}}: {{question.question}}</div>
                     <span class="badge badge-secondary float-right pull-right btn-borderless btn-down">
                         <fa-icon size="2x" [icon]="toggle?faAngleDoubleUp:faAngleDoubleDown"></fa-icon>
                     </span>

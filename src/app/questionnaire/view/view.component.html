@@ -5,7 +5,7 @@
         <!-- Colocar o nome do user que vem no questionário -->
         <small>Nome: {{questUserName}}</small><br>
         <small>Respondido em: {{ currentQuestionnaire?.lastModifiedDate | date:'dd/MM/yyyy, HH:mm:ss' }}</small><br>
-        <b><span class="badge badge-secondary" *ngIf="currentQuestionnaire?.qType=='QUIZ'">Nota: {{currentQuestionnaire?.score}}%</span></b>
+        <span *ngIf="currentQuestionnaire?.qType=='QUIZ'"><small>Nota: </small><b class="badge" [ngClass]="{'badge-success': currentQuestionnaire?.score > 50, 'badge-danger': currentQuestionnaire?.score < 50}">{{currentQuestionnaire?.score}}%</b></span>
     </div>
 
     <div>
@@ -15,7 +15,7 @@
                 <button class="btn btn-link btn-block clearfix" accordion-heading type="button" (click)="toggle=!toggle">
                     <span *ngIf="question.aType=='SINGLE_OPTION'"></span>
                     <div class="pull-left float-left">
-                        <span style="color: black;" [ngClass]="currentQuestionnaire?.qType=='QUIZ'&&(currentQuestionnaire?.answerList[i].rightAnswer ? 'rightAnswer' : 'wrongAnswer')">Questão {{i + 1}}</span>
+                        <span style="color: black;" [ngClass]="currentQuestionnaire?.qType=='QUIZ'&&(currentQuestionnaire?.answerList[i].rightAnswer ? 'rightAnswer' : 'wrongAnswer')">Questão {{question.orderNumber}}</span>
                         <span style="color: black;">: {{question.question}}</span>
                     </div>
                     <span class="badge badge-secondary float-right pull-right btn-borderless btn-down">
