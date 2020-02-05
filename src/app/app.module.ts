@@ -19,6 +19,7 @@ import { NgxSelectModule } from 'ngx-select-ex';
 import { ProfileComponent } from './profile/profile.component';
 import { ValidateComponent } from './validate/validate.component';
 import { ToastrModule } from 'ngx-toastr';
+import { TabsModule } from 'ngx-bootstrap/tabs';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { ToastrModule } from 'ngx-toastr';
     FontAwesomeModule,
     CollapseModule.forRoot(),
     NgxSelectModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    TabsModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -13,7 +13,7 @@ import { SidebarComponent } from './sidebar/sidebar.component';
 import { ToAnswerComponent } from './to-answer/to-answer.component';
 import { PendingComponent } from './pending/pending.component';
 import { HistoryComponent } from './history/history.component';
-import { BsDropdownModule } from 'ngx-bootstrap';
+import { BsDropdownModule, TabsModule } from 'ngx-bootstrap';
 import { NgxSelectModule } from 'ngx-select-ex';
 import { AccordionModule } from 'ngx-bootstrap/accordion';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -53,7 +53,8 @@ import { PieGraphComponent } from './shared/graphs/pie-graph/pie-graph.component
     Ng2SearchPipeModule,
     Ng2OrderModule,
     NgxPaginationModule,
-    SelectDropDownModule
+    SelectDropDownModule,
+    TabsModule.forRoot()
   ]
 })
 export class QuestionnaireModule { }

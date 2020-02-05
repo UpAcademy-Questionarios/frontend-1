@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { QuestionService } from '../services/question-service/question.service';
 import { Question } from '../models/question/question';
 import { QuestionnaireService } from '../services/questionnaire-service/questionnaire.service';
@@ -150,6 +150,12 @@ export class NewQuestionnaireComponent implements OnInit {
       this.currentQuestionnaire.qType = "QUIZ";
     } else {
       this.currentQuestionnaire.qType = "EVALUATION";
+    }
+
+    if (this.anonymous){
+      this.currentQuestionnaire.anonymous = true
+    } else {
+      this.currentQuestionnaire.anonymous = false
     }
 
     //Add answerList empty to the questionnaire

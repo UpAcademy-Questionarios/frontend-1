@@ -27,7 +27,10 @@ export class PieGraphComponent implements OnInit, OnChanges {
   constructor() { }
 
   ngOnInit() {
-    //this.draw();
+    this.draw();
+    if (this.data){
+      this.update();
+    }
     //window.addEventListener('resize', this.resize.bind(this))
   }
 
@@ -37,10 +40,13 @@ export class PieGraphComponent implements OnInit, OnChanges {
 
   ngOnChanges(){
     console.log("mudou")
-    if (this.data) {
-      d3.selectAll("svg").remove();
-    this.draw();
-    }
+    if (this.pie) {
+      this.update()
+    }  
+    // } else {
+    //   //d3.selectAll("svg").remove();
+    // this.draw();
+    // }
     
   }
 
@@ -55,7 +61,8 @@ export class PieGraphComponent implements OnInit, OnChanges {
       .append('g')
       .attr('transform', 'translate(' + this.width / 2 + ',' +
         this.height / 2 + ')');
-
+  }
+  update() {
     this.color = d3.scaleOrdinal()
       .domain(this.data)
       .range(['green', 'red']);
