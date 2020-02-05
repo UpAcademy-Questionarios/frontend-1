@@ -1,7 +1,10 @@
-<p style="padding-top: 4%;">statistics works!</p>
+<p style="padding-top: 4%;"> </p>
   
 
-<h1>Historico de cenas</h1>
+<div *ngIf="currentRole == 'ADMIN'">ADMIN STATISTICS</div>
+<div *ngIf="currentRole == 'SUPERUSER'">FORMADOR STATISTICS</div>
+<div *ngIf="currentRole == 'USER'">FORMANDO STATISTICS</div>
+<div>Historico </div>
 <div *ngFor="let questionnaire of questionnaireData">
     <div [ngStyle]="{'color': questionnare?.score > 70 ? 'green':'red'}">{{questionnaire.name}} -- {{questionnaire.score}}</div>
 </div>

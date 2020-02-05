@@ -6,6 +6,7 @@ export class Account {
     'createDate': number;
     'lastModifiedDate': number;
     'userAcademies': number[];
+    'imageLink': string;
 
     constructor(data?: any) {
         Object.assign(this, data);

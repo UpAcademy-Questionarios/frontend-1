@@ -3,155 +3,87 @@
 
 <div class="container-fluid m-auto text-center">
 
-    <h1>Criador de Questionários</h1>
+    <h1>Editor de templates</h1>
   
   
-    <!-- <div id="accordion">
-      <div class="card">
-        <div class="card-header" id="headingOne">
-          <h5 class="mb-0">
-            <button class="btn" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false"
-              aria-controls="collapseOne">
-              Dados do Questionário
+    <accordion [isAnimated]="true">
+        <accordion-group [isOpen]="isOpenDate">
+            <button class="btn btn-link btn-block clearfix" accordion-heading type="button" (click)="isOpenDate=!isOpenDate">
+                <span class="pull-center float-center">Dados do Questionário</span>
+              <span class="badge badge-secondary float-right pull-right btn-borderless">
+                  <fa-icon size="2x" [icon]="isOpenDate?faAngleDoubleUp:faAngleDoubleDown"></fa-icon>
+                </span>
             </button>
-          </h5>
-        </div>
-  
-        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
-          <div class="card-body">
-            <div id="questdata" class="container-fluid bg-light"
-              style="border-radius: 15px; color: black; border: 1px solid black; padding: 35px;">
-              <div class="row">
-                <label class="col-2" for="#questonnaireName">Nome: </label>
-                <input class="col-8 mb-3" id="questonnaireName" type="text" placeholder="Nome"
-                  [(ngModel)]="currentQuestionnaire.name" name="questonnaireName">
+            <div class="row">
+              <label class="col-2" for="#questonnaireName">Nome: </label>
+              <input class="col-8 mb-3" id="questonnaireName" type="text" placeholder="Nome"
+                [(ngModel)]="currentQuestionnaire.name" name="questonnaireName">
+            </div>
+        
+            <div class="form-check-inline mb-3">
+              <input class="ml-4" type="checkbox" [(ngModel)]="template" name="template">Template
+              <input class="ml-4" type="checkbox" [(ngModel)]="quiz" name="quiz"
+                (click)="currentQuestionnaire.questionList=[]; currentQuestion.rightAnswer=[]; currentQuestion.options=[]">Com
+              resposta certa
+              <input class="ml-4" type="checkbox" [(ngModel)]="anonymous" name="anonymous">Questionário anónimo
+            </div>
+            <div class="row">
+              <div class="form-group col-6">
+                <label for="editPermissionSelect">Permissão para editar:</label>
+                <ngx-select-dropdown [(ngModel)]="currentQuestionnaire.editPrivacy" [config]="{displayKey:'display', moreText:'selecionados', noResultsFound:'Não há mais resultados', placeholder:'Selecione'}" [options]="roles" [multiple]="true"></ngx-select-dropdown>
               </div>
-  
-              <div class="form-check-inline mb-3">
-                <input class="ml-4" type="checkbox" [(ngModel)]="template" name="template">Template
-                <input class="ml-4" type="checkbox" [(ngModel)]="quiz" name="quiz"
-                  (click)="currentQuestionnaire.questionList=[]; currentQuestion.rightAnswer=[]; currentQuestion.options=[]">Com
-                resposta certa
-                <input class="ml-4" type="checkbox" [(ngModel)]="anonymous" name="anonymous">Questionário anônimo:
-              </div>
-              <div class="row">
-                <div class="form-group col-6">
-                  <label for="editPermissionSelect">Permissão para editar:</label>
-                  <select multiple class="form-control" id="editPermissionSelect"
-                    [(ngModel)]="currentQuestionnaire.editPrivacy" name="editPermissionSelect">
-                    <option value="ADMIN">Admin</option>
-                    <option value="SUPERUSER">Formador</option>
-                    <option value="USER">Formando</option>
-                  </select>
-                </div>
-                <div class="form-group col-6">
-                  <label for="viewPermissionSelect">Permissão para visualizar:</label>
-                  <select multiple class="form-control" id="viewPermissionSelect"
-                    [(ngModel)]="currentQuestionnaire.viewPrivacy" name="viewPermissionSelect">
-                    <option value="ADMIN">Admin</option>
-                    <option value="SUPERUSER">Formador</option>
-                    <option value="USER">Formando</option>
-                  </select>
-                </div>
-              </div>
-              <div class="form-row">
-                <div class="col-2">
-                  <input type="checkbox" [(ngModel)]="send" name="sendCheckBox">Enviar?
-                </div>
-                <div class="col-2">Academia</div>
-                <div class="col-3">
-                  <ngx-select [disabled]="!send" [items]="academies" [(ngModel)]="academy" name="academy">
-                  </ngx-select>
-                </div>
-                <div class="col-2">Para</div>
-                <div class="col-3">
-                  <ngx-select [disabled]="traineesId.empty" [multiple]="true" [items]="traineesId" [(ngModel)]="trainees"
-                    nome="trainees">
-                  </ngx-select>
-                </div>
+              <div class="form-group col-6">
+                <label for="viewPermissionSelect">Permissão para visualizar:</label>
+                <ngx-select-dropdown [(ngModel)]="currentQuestionnaire.viewPrivacy" [config]="{displayKey:'display', moreText:'selecionados', noResultsFound:'Não há mais resultados', placeholder:'Selecione'}" [options]="roles" [multiple]="true"></ngx-select-dropdown>
               </div>
             </div>
-          </div>
-        </div>
-      </div>
-    </div> -->
+            <div class="form-row">
+              <div class="col-2">
+                <input (change)="getAcademies($event)" type="checkbox" [(ngModel)]="send" name="sendCheckBox">Enviar?
+              </div>
+              <div class="col-2">Academia</div>
+              <div class="col-3">
+                <!-- <ngx-select [disabled]="!send" [items]="academies" [(ngModel)]="academy" name="academy">
+                </ngx-select> -->
+                <ngx-select-dropdown (change)="getUsersByAcademy($event, academy)" [disabled]="!send" [options]="academies" [(ngModel)]="academy" [config]="{displayKey:'text', moreText:'selecionados', noResultsFound:'Não há mais resultados', placeholder:'Selecione'}"></ngx-select-dropdown>
+              </div>
+              <div class="col-2">Para</div>
+              <div class="col-3">
+                  <ngx-select-dropdown [(ngModel)]="selectedUsers" [options]="users" [config]="{displayKey:'text', moreText:'selecionados', noResultsFound:'Não há mais resultados', placeholder:'Selecione'}" [multiple]="true"></ngx-select-dropdown>
+               
+                  <!-- <ngx-select size='small'[disabled]="traineesId.empty" [multiple]="true" [items]="traineesId" [(ngModel)]="trainees"
+                  nome="trainees"></ngx-select> -->
+              </div>
+            </div>
+              </accordion-group>
+  
+      </accordion>
   
   
-    <label for="questdata" style="color: rgba(143, 143, 143, 0.742); font: bold;">Dados do Questionário</label>
-    <div id="questdata" class="container-fluid bg-light"
-      style="border-radius: 15px; color: black; border: 1px solid black; padding: 35px;">
-      <div class="row">
-        <label class="col-2" for="#questonnaireName">Nome: </label>
-        <input class="col-8 mb-3" id="questonnaireName" type="text" placeholder="Nome"
-          [(ngModel)]="currentQuestionnaire.name" name="questonnaireName">
-      </div>
-  
-      <div class="form-check-inline mb-3">
-        <input class="ml-4" type="checkbox" [(ngModel)]="template" name="template">Template
-        <input class="ml-4" type="checkbox" [(ngModel)]="quiz" name="quiz"
-          (click)="currentQuestionnaire.questionList=[]; currentQuestion.rightAnswer=[]; currentQuestion.options=[]">Com
-        resposta certa
-        <input class="ml-4" type="checkbox" [(ngModel)]="anonymous" name="anonymous">Questionário anônimo
-      </div>
-      <div class="row">
-        <div class="form-group col-6">
-          <label for="editPermissionSelect">Permissão para editar:</label>
-          <select multiple class="form-control" id="editPermissionSelect" [(ngModel)]="currentQuestionnaire.editPrivacy"
-            name="editPermissionSelect">
-            <option value="ADMIN">Admin</option>
-            <option value="SUPERUSER">Formador</option>
-            <option value="USER">Formando</option>
-          </select>
-        </div>
-        <div class="form-group col-6">
-          <label for="viewPermissionSelect">Permissão para visualizar:</label>
-          <select multiple class="form-control" id="viewPermissionSelect" [(ngModel)]="currentQuestionnaire.viewPrivacy"
-            name="viewPermissionSelect">
-            <option value="ADMIN">Admin</option>
-            <option value="SUPERUSER">Formador</option>
-            <option value="USER">Formando</option>
-          </select>
-        </div>
-      </div>
-      <div class="form-row">
-        <div class="col-2">
-          <input type="checkbox" [(ngModel)]="send" name="sendCheckBox">Enviar?
-        </div>
-        <div class="col-2">Academia</div>
-        <div class="col-3">
-          <ngx-select [disabled]="!send" [items]="academies" [(ngModel)]="academy" name="academy">
-          </ngx-select>
-        </div>
-        <div class="col-2">Para</div>
-        <div class="col-3">
-          <ngx-select [disabled]="traineesId.empty" [multiple]="true" [items]="traineesId" [(ngModel)]="trainees"
-            nome="trainees">
-          </ngx-select>
-        </div>
-      </div>
-    </div>
+    <div style="color: rgb(0, 148, 30);"></div>
   
     <label for="questdata" class="mt-3" style="color: rgba(143, 143, 143, 0.742); font: bold;">Adicionar questões</label>
   
-    <div class="row bg-light" style="border: 1px solid black; border-radius: 15px;">
+    <div class="row" [ngStyle]="{'background-color': multi ? 'rgba(156, 212, 255, 0.995)': single ? 'rgb(148, 255, 170)': 'rgb(255, 221, 148)' }" 
+    style="border: 1px solid black; border-radius: 15px;">
       <div *ngIf="!quiz" class="row col-3" style="border-radius: 15px;">
         <button (click)="multi=true; single=false; open=false; currentQuestion.options=[]; select='MULTIPLE'"
-          class="col-12"
-          style="border: unset; border-bottom: 1px solid black; border-radius: 15px 0px 0px 0px; background-color: gray;"
-          [ngClass]="{'bg-light':multi }" [ngStyle]="{'border-right': multi ? '0':'1px solid black'}">Resposta <br>
+          class="col-12" 
+          style="border: unset; border-bottom: 1px solid black; border-radius: 15px 0px 0px 0px; background-color: rgba(156, 212, 255, 0.995);"
+           [ngStyle]="{'border-right': multi ? '0':'1px solid black'}">Resposta <br>
           múltipla</button>
   
         <button (click)="single=true; multi=false; open=false; currentQuestion.options=[]; select='SINGLE_OPTION'"
-          class="col-12" style="background-color: gray;" [ngClass]="{'bg-light':single}"
+          class="col-12"  style="background-color: rgb(148, 255, 170);"
           [ngStyle]="{'border-right': single ? '0':'1px solid black'}">
           Resposta <br> única</button>
   
         <button (click)="open=true; multi=false; single=false; currentQuestion.options=[]; select='OPEN'" class="col-12"
-          style="border: unset; border-right: 1px solid; border-top: 1px solid black; border-radius: 0px 0px 0px 15px; background-color: gray;"
-          [ngClass]="{'bg-light':open }" [ngStyle]="{'border-right': open ? '0':'1px solid black'}">Resposta <br>
+          style="border: unset; border-right: 1px solid; border-top: 1px solid black; border-radius: 0px 0px 0px 15px; background-color: rgb(255, 221, 148);"
+           [ngStyle]="{'border-right': open ? '0':'1px solid black'}">Resposta <br>
           aberta</button>
       </div>
-      <div class="col-9" style="padding: 15px; background-color: transparent;">
+      <div class="col-9 container-fluid" style="padding: 15px; background-color: transparent;">
         <div>
           <textarea style="width: 80%;" name="question" [(ngModel)]="currentQuestion.question"
             placeholder="Pergunta"></textarea>
@@ -183,9 +115,12 @@
             <label *ngIf="quiz" for="#rightCheckBox">Resposta certa</label>
             <input *ngIf="quiz" name="rightCheckBox" [(ngModel)]="rightCheck" id="rightCheckBox" type="checkbox">
   
-            <button (click)="addMoreOptions(rightCheck); rightCheck=false">Adicionar</button><span
-              [innerHTML]='customHtml' class="ml-2"></span>
+            <button (click)="addMoreOptions(rightCheck); rightCheck=false">Adicionar</button>
+            <span style="color: red;" [innerHTML]='customHtml' class="ml-2"></span>
           </label>
+          <input style="width: 15%;" [(ngModel)]="begin" placeholder="Inicial" type="number">
+          <input style="width: 15%;" [(ngModel)]="end" placeholder="Final" type="number">
+          <button (click)="addCustomOptions(begin, end)">Gerar Opções</button>
         </div>
       </div>
     </div>
@@ -195,7 +130,7 @@
       Adicionar Pergunta
     </button>
   
-    <div *ngIf="currentQuestionnaire.questionList" for="questdata" class="mt-2 mb-2" style="color: rgba(143, 143, 143, 0.742); font: bold;">Questões criadas</div>
+    <div *ngIf="currentQuestionnaire.questionList.length > 0" for="questdata" class="mt-2 mb-2" style="color: rgba(143, 143, 143, 0.742); font: bold;">Questões criadas</div>
   
   
     <accordion [isAnimated]="true">
@@ -203,11 +138,13 @@
         *ngFor="let question of currentQuestionnaire.questionList; let i = index; let toggle = true; let editToggle = false"
         class="mb-4">
         <button class="btn btn-link btn-block clearfix" accordion-heading type="button" (click)="toggle=!toggle">
-          <div class="pull-left float-left">Questão {{i + 1}} - {{question.question}}</div>
+          <div class="pull-left float-left" [ngStyle]="{'background-color': question.aType == 'MULTIPLE' ? 'rgba(156, 212, 255, 0.995)': question.aType == 'SINGLE_OPTION' ? 'rgb(148, 255, 170)': 'rgb(255, 221, 148)' }">Questão {{i + 1}} - {{question.question}}</div>
           <span class="badge badge-secondary float-right pull-right btn-borderless btn-down">
             <fa-icon size="2x" [icon]="toggle?faAngleDoubleUp:faAngleDoubleDown"></fa-icon>
           </span>
         </button>
+        <span>Questão:</span><span *ngIf="!editToggle">{{question.question}}</span>
+        <input *ngIf="editToggle" [(ngModel)]="currentQuestionnaire.questionList[i].question" type="text">
         <p>Respostas:</p>
   
   
@@ -231,7 +168,7 @@
     </accordion>
   
     <div>
-        <button *ngIf="currentQuestionnaire.questionList" class="btn btn-success mb-3" (click)="addQuestionnaire()">
+        <button *ngIf="currentQuestionnaire.questionList.length > 0" class="btn btn-success mb-3" (click)="addQuestionnaire()">
           Submeter Formulário
         </button>
       </div>

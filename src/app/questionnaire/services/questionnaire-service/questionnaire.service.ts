@@ -59,10 +59,9 @@ export class QuestionnaireService {
     return this.http.get(this.url + 'role/' + role);
   }
 
-  // Ir buscar
-  // public createQuestionnaireWithAccount(id: number, arrayIds: number[]){
-  //   return this.http.post(this.url + id + "/accounts", arrayIds, {responseType: 'text'});
-  // }
+  public getAllQuizzesByAccountId(id: number){
+    return this.http.get(this.url + 'account/' + id + "/quizzes");
+  }
 
   public createQuestionnaireWithAccountId(questionnaire: Questionnaire, template, arrayIds: number[]) {
     let query = "query?";

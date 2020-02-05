@@ -8,6 +8,8 @@ import { TemplateService } from '../services/template-service/template.service';
 import { BsDropdownConfig } from 'ngx-bootstrap/dropdown';
 import { faTrash, faCheck, faEdit, faSave,faAngleDoubleDown, faAngleDoubleUp } from '@fortawesome/free-solid-svg-icons';
 import { ToastrService } from 'ngx-toastr';
+import { AccountService } from '../services/account-service/account.service';
+import { User } from 'src/app/core/models/user';
 
 
 @Component({
@@ -22,7 +24,8 @@ export class NewQuestionnaireComponent implements OnInit {
     //private questionService: QuestionService,
     private questionnaireService: QuestionnaireService,
     private templateService: TemplateService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private accountService: AccountService
   ) {}
 
  private currentQuestion: Question = new Question();
@@ -31,9 +34,10 @@ export class NewQuestionnaireComponent implements OnInit {
  private template: boolean;
  private quiz: boolean;
  private anonymous: boolean;
- private academies: any = [1, 2, 3, 4, 5];
- private traineesId: any = [{ 'id': "1", 'text': "Zé Carlos" }, { 'id': "2", 'text': "Carlota" }, { 'id': "3", 'text': "Zé das Couves" },{ 'id': "4", 'text': "Margarette" }, { 'id': "5", 'text': "Todos" }];
- private trainees: any[] = [];
+ private academies: any = [];
+ //private users: any = [];
+ private users: any = [{ id: 1, text: "Zé Carlos" }, { id: 2, text: "Carlota" }, { id: "2", text: "Zé das Couves" },{ id: "4", text: "Margarette" }, { id: "5", text: "Todos" }];
+ private selectedUsers: any[] = [];
  private roles = [{'role': "ADMIN", 'display': "Admin" }, {'role': "SUPERUSER", 'display': "Formador" }, {'role': "USER", display: "Formando" },]
  private option: string = "";
  private customHtml: string
@@ -51,7 +55,35 @@ export class NewQuestionnaireComponent implements OnInit {
 //  private customNumberEnd: number;
 
 
-  
+  public getAcademies(e){
+    if (e.target.checked) {
+      console.log("entrou")
+      this.accountService.getAcademies().subscribe(
+        (academies: number[]) => {
+          this.academies = academies;
+          console.log(academies)
+        });
+    }
+  }
+
+  public getUsersByAcademy(e, academy){
+    
+    console.log(academy)
+    console.log("entrou")
+    this.users = [];
+    this.accountService.getUsersByAcademy(academy).subscribe(
+      (users: User[]) => {
+        console.log(users)
+        let temporaryUser = []
+        for (let i = 0; i < users.length; i++) {
+          let newUser = { 'id': users[i].id, 'text': users[i].name}
+          temporaryUser.push(newUser);
+          console.log(i);
+          console.log(this.users);
+        }
+        this.users = temporaryUser
+      });
+  }
 
   public addMoreOptions(rightCheck: boolean){
     if(this.option != ""){
@@ -134,8 +166,8 @@ export class NewQuestionnaireComponent implements OnInit {
       this.currentQuestionnaire.viewPrivacy[index] = this.currentQuestionnaire.viewPrivacy[index].role      
     }
 
-    for (let index = 0; index < this.trainees.length; index++) {
-      this.trainees[index] = this.trainees[index].id      
+    for (let index = 0; index < this.selectedUsers.length; index++) {
+      this.selectedUsers[index] = this.selectedUsers[index].id      
     }
 
 
@@ -158,7 +190,7 @@ export class NewQuestionnaireComponent implements OnInit {
    
     //this.currentQuestionnaire.template = false
 
-      this.questionnaireService.createQuestionnaireWithAccountId(this.currentQuestionnaire, this.template, this.trainees).subscribe(
+      this.questionnaireService.createQuestionnaireWithAccountId(this.currentQuestionnaire, this.template, this.selectedUsers).subscribe(
         (msg: string) => {
               console.log(msg);
               this.showToastSuccess("Questionário enviado com sucesso");
@@ -170,7 +202,10 @@ export class NewQuestionnaireComponent implements OnInit {
     this.currentQuestionnaire = new Questionnaire(); 
   }
 
-  public viewStuff(){
+  public viewStuff(users){
+    console.log(this.users)
+    this.users = [{id:6, text: "deu"}]
+    console.log(this.users)
     //console.log(this.viewPrivacy);
   }
 

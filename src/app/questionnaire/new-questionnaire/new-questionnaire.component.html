@@ -39,17 +39,17 @@
           </div>
           <div class="form-row">
             <div class="col-2">
-              <input type="checkbox" [(ngModel)]="send" name="sendCheckBox">Enviar?
+              <input (change)="getAcademies($event)" type="checkbox" [(ngModel)]="send" name="sendCheckBox">Enviar?
             </div>
             <div class="col-2">Academia</div>
             <div class="col-3">
               <!-- <ngx-select [disabled]="!send" [items]="academies" [(ngModel)]="academy" name="academy">
               </ngx-select> -->
-              <ngx-select-dropdown [disabled]="!send" [options]="academies" [(ngModel)]="academy" [config]="{displayKey:'text', moreText:'selecionados', noResultsFound:'Não há mais resultados', placeholder:'Selecione'}"></ngx-select-dropdown>
+              <ngx-select-dropdown (change)="getUsersByAcademy($event, academy)" [disabled]="!send" [options]="academies" [(ngModel)]="academy" [config]="{displayKey:'text', moreText:'selecionados', noResultsFound:'Não há mais resultados', placeholder:'Selecione'}"></ngx-select-dropdown>
             </div>
             <div class="col-2">Para</div>
             <div class="col-3">
-                <ngx-select-dropdown [(ngModel)]="trainees" [options]="traineesId" [config]="{displayKey:'text', moreText:'selecionados', noResultsFound:'Não há mais resultados', placeholder:'Selecione'}" [multiple]="true"></ngx-select-dropdown>
+                <ngx-select-dropdown [(ngModel)]="selectedUsers" [options]="users" [config]="{displayKey:'text', moreText:'selecionados', noResultsFound:'Não há mais resultados', placeholder:'Selecione'}" [multiple]="true"></ngx-select-dropdown>
              
                 <!-- <ngx-select size='small'[disabled]="traineesId.empty" [multiple]="true" [items]="traineesId" [(ngModel)]="trainees"
                 nome="trainees"></ngx-select> -->

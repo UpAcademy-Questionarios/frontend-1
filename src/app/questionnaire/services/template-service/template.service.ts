@@ -26,6 +26,14 @@ export class TemplateService {
       });
   }
 
+  public getAllQuizzesByTemplateId(id: number){
+    return this.http.get(this.url + id + "/quizzes");
+  }
+
+  public getAllEvaluationsByTemplateId(id: number){
+    return this.http.get(this.url + id + "/evaluations");
+  }
+
   public getTemplate(id: number) {
     return this.http.get(this.url + id);
   }

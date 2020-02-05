@@ -51,4 +51,12 @@ export class AccountService {
     return this.http.delete(this.url + id);
   }
   
+  public getAcademies(){
+    return this.http.get(this.url + "academies");
+  }
+
+  public getUsersByAcademy(academy: number){
+    return this.http.get(this.url + "academies/" + academy);
+  }
+
 }
