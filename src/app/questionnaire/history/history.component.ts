@@ -7,6 +7,9 @@ import { UserServiceService } from 'src/app/core/services/user-service/user-serv
 import { Router } from '@angular/router';
 import { User } from 'src/app/core/models/user';
 import { faSearch} from '@fortawesome/free-solid-svg-icons';
+import { faTimesCircle} from '@fortawesome/free-solid-svg-icons';
+
+
 
 
 @Component({
@@ -35,6 +38,7 @@ export class HistoryComponent implements OnInit {
   }
   // sort
   faSearch = faSearch;
+  faTimesCircle = faTimesCircle;
 
   constructor(
     private questService: QuestionnaireService,
