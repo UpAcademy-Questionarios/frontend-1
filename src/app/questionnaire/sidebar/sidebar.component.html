@@ -1,5 +1,5 @@
  <div>
-  <a id="sidebarButton" [ngStyle]="{'left':collapsed ? '2rem' : '5rem' }" ><i>
+  <a id="sidebarButton" [ngStyle]="{'left':collapsed ? '2rem' : '4.5rem' }" ><i>
     <fa-icon [icon]="collapsed ? faExpand : faCompress " (click)="collapsed = !collapsed"></fa-icon>
   </i></a>
 </div>
@@ -62,7 +62,7 @@
 
             <li id="questNew"  *ngIf="showSideBar" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
                 >
-                <a  style="cursor: pointer;"  (click)="new = !new; hideNewFileTemplate=!hideNewFileTemplate; pending=false; history=false; newFile=true; template=false; statistics=false " ><i>
+                <a  style="cursor: pointer;"  (click)="new = !new; hideNewFileTemplate=!hideNewFileTemplate; pending=false; history=false; newFile=false; template=false; statistics=false " ><i>
                 <fa-icon style=" width: 20; height: 16; margin-right: 6%;"[icon]="faPlusSquare"></fa-icon>
                 </i><span>Criar</span><i><fa-icon style="margin-left: 0.3rem;" [icon]="new ? faCaretUp : faCaretDown "></fa-icon></i></a>
             </li>
@@ -78,11 +78,6 @@
                     </a>
                 </li>
                 <span  class="divider " [ngClass]="{'hidden' : hideNewFileTemplate}"></span>
-        
-            
-
-
-
 
             <li >
               <div class="container fixed-bottom" style=" margin: 0; padding-left: 0; padding-right: 0; bottom: 1.8rem; "  >

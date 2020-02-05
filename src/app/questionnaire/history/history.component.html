@@ -6,7 +6,6 @@
 <div class="text-center"*ngIf="emptyHistory" id="historyWarning">
   <fa-icon size="9x" style="color: red;" [icon]="faTimesCircle"></fa-icon>
   <h5 class="my-5">Histórico vazio</h5>
-
 </div>
 
 <div *ngIf="!emptyHistory">
@@ -52,7 +51,7 @@
           *ngFor="let rowTeste of allHistory| orderBy: key : reverse|filter: term|paginate: { itemsPerPage: 10, currentPage: p } ">
           <td>{{rowTeste.name}}</td>
           <td>{{rowTeste.userName}}</td>
-          <td>{{rowTeste.targetAcademy}}</td>
+          <td>{{rowTeste.userAcademies}}</td>
           <td>{{dateChange(rowTeste)}} <a id="btnStat" *ngIf="showView(rowTeste.viewPrivacy)" routerLinkActive="active"
               [routerLinkActiveOptions]="{exact: true}" routerLink="/questionario/historico/ver"
               (click)="viewThisQuestionnaire(rowTeste)">
@@ -69,6 +68,3 @@
     </pagination-controls>
   </div>
 </div>
-
-<!--   <a routerLink= "/questionario/historico/estatisticas">Estatisticas do Formulario Especifico</a>
- -->
