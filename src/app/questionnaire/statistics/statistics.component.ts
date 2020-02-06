@@ -161,10 +161,19 @@ getAllFromTemplateId(template: Questionnaire){
         let temporaryArray = []
         let timeUp: number = 0;//
         let timeDown: number = 0;//
+
+        console.log(data);
+        
+        this.questionnaireData.forEach((quest) => {
+          console.log(quest);
+          
+          quest.answerTime = Math.floor(quest.answerTime / 1000);
+        })
         data.sort((a, b) => a.answerTime - b.answerTime);//
-        this.minTime = Math.floor(data[0].answerTime / 60000);//
-        this.maxTime = Math.floor(data[data.length - 1].answerTime / 60000);//
+        this.minTime = this.questionnaireData[0].answerTime;//
+        this.maxTime = this.questionnaireData[this.questionnaireData.length - 1].answerTime;//
         this.timeTrashold = (this.minTime + this.maxTime)/2;//
+
         data.forEach(element => {
           (element.score > this.trashold) ? up += 1 : down += 1;
           this.passedScore = { aprovados: up, reprovados: down };
