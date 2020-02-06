@@ -1,47 +1,52 @@
-<p style="padding-top: 4%;"> </p>
+<p style="padding-top: 4%;" > </p>
+
+<h1>Estatísticas</h1>
+
+<div *ngIf="currentRole == 'ADMIN' || currentRole == 'SUPERUSER'" class="text-center">
+<div class="container" style="width: 35%;">
+<ngx-select-dropdown (change)="getAllFromTemplateId(temp)" [(ngModel)]="temp"
+  [config]="{displayKey:'name', moreText:'selecionados', noResultsFound:'Não há mais resultados', placeholder:'Selecione'}"
+  [options]="templateCustomArray"></ngx-select-dropdown>
+</div>
+<div class="container mt-5">
+  <div *ngFor="let question of evaluation?.questionList; let i = index;">
+    <span *ngIf="question.aType == 'SINGLE_OPTION'">Questão {{i+1}} - {{question.question}} - </span>
+    <span [ngStyle]="{'color': mean(i) > 3 ? 'green':'red'}"
+      *ngIf="question.aType == 'SINGLE_OPTION'">{{mean(i)}}/{{question.options.length}}</span>
+  </div>
+</div>
+
+<!-- Aqui vai ficar um grafico (se o admin escolher um quiz em vez de uma avaliação) -->
+<button (click)="showStuff()"></button>
+<div class="d3BarChart">
+    <app-bar-graph *ngIf="chartData" [data]="chartData"></app-bar-graph>
+</div>
+
+</div>
 
 
-<div *ngIf="currentRole == 'ADMIN'">ADMIN STATISTICS</div>
-<div *ngIf="currentRole == 'SUPERUSER'">FORMADOR STATISTICS</div>
-<div *ngIf="currentRole == 'USER'">FORMANDO STATISTICS</div>
+<div *ngIf="currentRole == 'USER'" class="text-center">
 <div>Historico </div>
 <div *ngFor="let questionnaire of questionnaireData">
   <div [ngStyle]="{'color': questionnare?.score > 70 ? 'green':'red'}">{{questionnaire.name}} -- {{questionnaire.score}}
   </div>
 </div>
 
+</div>
+
+<div class="float-right" style="bottom: 0;">
 <div class="slidecontainer">
-    <input (ngModelChange)="onChange(device.value)" #device [(ngModel)]="rangeValue" type="range" min="1" max="100" value="50" class="slider" id="myRange">
-  </div>
-  <div>{{rangeValue}}</div>
-  
-  <div class="d3BarChart float-right" style="bottom: 0;">
-    <app-pie-graph  [trashold]="rangeValue" [data]="passedScore"></app-pie-graph>
-  </div>
-
-  <div *ngIf="currentRole == 'ADMIN' || currentRole == 'SUPERUSER'">
-    <div *ngFor="let template of templates; let i = index;">
-      <p>{{i+1}}</p>
-      <a (click)="getAllFromTemplateId(template)" >{{template.name}}</a>
-    </div>
-
-    <div *ngFor="let question of evaluation?.questionList; let i = index;">
-      <span *ngIf="question.aType == 'SINGLE_OPTION'">Questão {{i+1}} - {{question.question}}</span>
-      <span [ngStyle]="{'color': mean(i) > 3 ? 'green':'red'}" *ngIf="question.aType == 'SINGLE_OPTION'">{{mean(i)}}/{{question.options.length}}</span>
-    </div>
-
-  </div>
   <input (ngModelChange)="onChange(device.value)" #device [(ngModel)]="rangeValue" type="range" min="1" max="100"
     value="50" class="slider" id="myRange">
 </div>
 <div>{{rangeValue}}</div>
-<div class="d3BarChart float-right" style="bottom: 0;">
+
+<div class="d3BarChart">
   <app-pie-graph [trashold]="rangeValue" [data]="passedScore"></app-pie-graph>
+</div>
 </div>
 
 
-
-<br><br><br><br>
 
 <div *ngFor="let questionnaire of questionnaireData">
   <div>{{questionnaire.name}} -- {{questionnaire.answerTime}}
@@ -49,8 +54,8 @@
 </div>
 
 <div class="slidecontainer">
-  <input (ngModelChange)="onTimeTrasholdChange(timeslider.value)" #timeslider [(ngModel)]="timeValue" type="range" min="{{minTime}}" max="{{maxTime}}"
-    value="50" class="slider" id="myTimeRange">
+  <input (ngModelChange)="onTimeTrasholdChange(timeslider.value)" #timeslider [(ngModel)]="timeValue" type="range"
+    min="{{minTime}}" max="{{maxTime}}" value="50" class="slider" id="myTimeRange">
 </div>
 <div>{{timeValue}}</div>
 <div class="d3BarChart float-right" style="bottom: 0;">

@@ -24,6 +24,7 @@ export class StatisticsComponent implements OnInit {
   private rangeValue;
   private trashold: number = 50;
   private templates: Questionnaire[];
+  private templateCustomArray: any[] = [];
   private currentRole: string;
   private evaluations: Questionnaire[] = [];
   private quizzesData: Questionnaire[] = [];
@@ -35,6 +36,7 @@ export class StatisticsComponent implements OnInit {
   public minTime: number = 0;
   public maxTime: number = 0;
 
+  private chartData: any[] = ['Jorge', 80, 'Ed', 75, 'Marta', 65, 'Raquel', 10];
 
   constructor(
     private route: ActivatedRoute,
@@ -76,6 +78,7 @@ export class StatisticsComponent implements OnInit {
     } else {
       this.templateService.getAllTemplates()
       this.templates = templateService.templates
+      this.templates.forEach( el => this.templateCustomArray.push({id:el.id, name:el.name, qType:el.qType}))
       console.log(templateService.templates)
     }
   }
@@ -120,9 +123,11 @@ export class StatisticsComponent implements OnInit {
 
 
   showStuff() {
-    console.log(this.questionnaireData)
-    console.log(this.passedScore)
-    this.passedScore = { aprovados: 1, reprovados: 2 }
+    //testes
+    this.chartData = [['Jorge', 8000],['Jorge', 90], ['Ed', 750], ['Marta', 650], ['Raquel', 100], ['Raquel', 100], ['Raquel', 100], ['Raquel', 100], ['Raquel', 100], ['Raquel', 100], ['Raquel', 100], ['Raquel', 100]];
+  
+
+    
   }
 
 

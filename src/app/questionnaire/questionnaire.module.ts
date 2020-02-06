@@ -24,7 +24,8 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { Ng2OrderModule } from 'ng2-order-pipe';
 import {NgxPaginationModule} from 'ngx-pagination';
 import {SelectDropDownModule } from 'ngx-select-dropdown';
-import { PieGraphComponent } from './shared/graphs/pie-graph/pie-graph.component'
+import { PieGraphComponent } from './shared/graphs/pie-graph/pie-graph.component';
+import { BarGraphComponent } from './shared/graphs/bar-graph/bar-graph.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { PieGraphComponent } from './shared/graphs/pie-graph/pie-graph.component
     JwPaginationComponent,
     ViewComponent,
     EditorComponent,
-    PieGraphComponent
+    PieGraphComponent,
+    BarGraphComponent
   ],
   imports: [
     CommonModule,
