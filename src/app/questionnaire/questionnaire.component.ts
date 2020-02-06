@@ -11,9 +11,8 @@ import { AccountService } from './services/account-service/account.service';
   styleUrls: ['./questionnaire.component.scss']
 })
 export class QuestionnaireComponent implements OnInit {
-  // public mobile = false;
-  // private showHide: false;
   private currentAccount: Account;
+
 
   constructor(
     private location: Location,
@@ -21,14 +20,8 @@ export class QuestionnaireComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    // if (window.screen.width === 360) { // 768px portrait
-    //   this.mobile = true;
-    // }
-  }
 
-  // ngOnInit() {
-  //   //this.currentAccount = this.accountApi.createAccount();
-  // }
+  }
 
   public goBack(): void {
     this.location.back();

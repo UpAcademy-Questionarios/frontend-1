@@ -33,9 +33,6 @@ export class SidebarComponent implements OnInit {
   public template = false;
   public statistics = false;
   public userName: string;
-  public admin = false;
-  public superUser = false;
-  public user = false;
   public imgLink: string //= "https://media-exp1.licdn.com/dms/image/C4D03AQH7xYqkYmOpJQ/profile-displayphoto-shrink_200_200/0?e=1586390400&v=beta&t=SiunMfepOPZZRd7GtMP8Av-ydZc58X85ffHyDZpauQU"
   public hideNewFileTemplate = true;
 
@@ -52,20 +49,9 @@ export class SidebarComponent implements OnInit {
       let userId = userApi.getCurrentUser().id
       accountService.getAccount(userId).subscribe(
         (account: Account) => {
-          this.imgLink = account.imageLink;}  
+          this.imgLink = account.imageLink;}
       )
       console.log(this.imgLink);
-      if (this.userApi.isAdmin()) {
-      //  this.adminImg = 'https://pbs.twimg.com/profile_images/588344745082146816/sDYHYEjp.jpg';
-       this.admin = true;
-      } else if (this.userApi.isSuperUser()) {
-        // this.superUserImg = 'https://course_report_production.s3.amazonaws.com/rich/rich_files/rich_files/3556/s200/up-academy-logo.png';
-        this.superUser = true;
-      } else {
-       // tslint:disable-next-line: max-line-length
-      //  this.userImg = 'https://previews.123rf.com/images/tuktukdesign/tuktukdesign1606/tuktukdesign160600185/59972237-student-icon-with-laptop-computer-online-graduation-academic-education-degree-icon-in-glyph-vector-i.jpg';
-       this.user = true;
-      }
    }
 
   ngOnInit() {
