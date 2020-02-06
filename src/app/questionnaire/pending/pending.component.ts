@@ -7,7 +7,10 @@ import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 @Component({
   selector: 'app-pending',
   templateUrl: './pending.component.html',
-  styleUrls: ['./pending.component.scss']
+  styleUrls: ['./pending.component.scss'],
+  host: {
+    class:'w-100'
+  }
 })
 export class PendingComponent implements OnInit {
 

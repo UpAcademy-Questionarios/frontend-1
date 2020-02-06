@@ -1,12 +1,13 @@
 <p style="padding-top: 4%;"> </p>
-  
+
 
 <div *ngIf="currentRole == 'ADMIN'">ADMIN STATISTICS</div>
 <div *ngIf="currentRole == 'SUPERUSER'">FORMADOR STATISTICS</div>
 <div *ngIf="currentRole == 'USER'">FORMANDO STATISTICS</div>
 <div>Historico </div>
 <div *ngFor="let questionnaire of questionnaireData">
-    <div [ngStyle]="{'color': questionnare?.score > 70 ? 'green':'red'}">{{questionnaire.name}} -- {{questionnaire.score}}</div>
+  <div [ngStyle]="{'color': questionnare?.score > 70 ? 'green':'red'}">{{questionnaire.name}} -- {{questionnaire.score}}
+  </div>
 </div>
 
 <div class="slidecontainer">
@@ -30,3 +31,28 @@
     </div>
 
   </div>
+  <input (ngModelChange)="onChange(device.value)" #device [(ngModel)]="rangeValue" type="range" min="1" max="100"
+    value="50" class="slider" id="myRange">
+</div>
+<div>{{rangeValue}}</div>
+<div class="d3BarChart float-right" style="bottom: 0;">
+  <app-pie-graph [trashold]="rangeValue" [data]="passedScore"></app-pie-graph>
+</div>
+
+
+
+<br><br><br><br>
+
+<div *ngFor="let questionnaire of questionnaireData">
+  <div>{{questionnaire.name}} -- {{questionnaire.answerTime}}
+  </div>
+</div>
+
+<div class="slidecontainer">
+  <input (ngModelChange)="onTimeTrasholdChange(timeslider.value)" #timeslider [(ngModel)]="timeValue" type="range" min="{{minTime}}" max="{{maxTime}}"
+    value="50" class="slider" id="myTimeRange">
+</div>
+<div>{{timeValue}}</div>
+<div class="d3BarChart float-right" style="bottom: 0;">
+  <app-pie-graph [trashold]="timeValue" [data]="timeRange"></app-pie-graph>
+</div>
