@@ -31,7 +31,7 @@ export class StatisticsComponent implements OnInit {
   private evaluation: Questionnaire;
   private visibleChart: boolean = false
 
-  public timeRange: any = { fast: 0, slow: 0 };//
+  public timeRange: any = { aprovados: 0, reprovados: 0 };//
   private timeValue;//
   private timeTrashold: number = 0;//
   public minTime: number = 0;
@@ -74,7 +74,7 @@ export class StatisticsComponent implements OnInit {
             this.passedScore = { aprovados: up, reprovados: down };
 
             (element.answerTime > this.timeTrashold) ? timeUp +=1 : timeDown +=1;//
-            this.timeRange = { fast: timeUp, slow: timeDown };//
+            this.timeRange = { aprovados: timeUp, reprovados: timeDown };//
           });
 
         }
@@ -135,7 +135,7 @@ export class StatisticsComponent implements OnInit {
       (this.questionnaireData[i].answerTime > timeTrashold) ? timeUp += 1 : timeDown += 1;
     }
   }
-    this.timeRange = { fast: timeUp, slow: timeDown };
+    this.timeRange = { aprovados: timeUp, reprovados: timeDown };
   }
 
 
@@ -178,7 +178,7 @@ getAllFromTemplateId(template: Questionnaire){
           (element.score > this.trashold) ? up += 1 : down += 1;
           this.passedScore = { aprovados: up, reprovados: down };
           (element.answerTime > this.timeTrashold) ? timeUp +=1 : timeDown +=1;//
-          this.timeRange = { fast: timeUp, slow: timeDown };//
+          this.timeRange = { aprovados: timeUp, reprovados: timeDown };//
           temporaryArray.push([element.userName, element.score]);
           this.chartData = temporaryArray;
         });
