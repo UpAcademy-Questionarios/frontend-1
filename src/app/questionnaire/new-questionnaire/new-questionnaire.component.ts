@@ -180,25 +180,6 @@ export class NewQuestionnaireComponent implements OnInit {
     }
 
 
-    // if (this.template) {
-    //   this.currentQuestionnaire.template = true;
-    //   this.questionnaireService.createQuestionnaire(this.currentQuestionnaire).subscribe(
-    //       (msg: string) => {
-    //         console.log("Id do template:")
-    //         console.log(msg);
-    //         this.currentQuestionnaire.templateId = Number(msg);
-    //         // const questionnaireId: number = Number(msg);
-    //         // this.questionnaireService.createQuestionnaireWithAccount(questionnaireId, this.trainees).subscribe();
-    //         // console.log(questionnaireId);
-    //         console.log(this.currentQuestionnaire)
-    //       }, (error: string) => {
-    //         console.log(error);
-    //       });
-    // } 
-    
-   
-    //this.currentQuestionnaire.template = false
-
       this.questionnaireService.createQuestionnaireWithAccountId(this.currentQuestionnaire, this.template, this.selectedUsers).subscribe(
         (msg: string) => {
               console.log(msg);
@@ -217,10 +198,6 @@ export class NewQuestionnaireComponent implements OnInit {
     console.log(this.users)
     //console.log(this.viewPrivacy);
   }
-
-  // public checkRightAnswer(index: number, jindex: number){
-  //   return this.currentQuestionnaire.questionList[index].rightAnswer.includes(String(jindex));
-  // }
 
   ngOnInit() {
   }

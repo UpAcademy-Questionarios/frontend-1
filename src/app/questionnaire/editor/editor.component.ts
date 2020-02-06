@@ -58,10 +58,6 @@ export class EditorComponent implements OnInit {
   }
 
 
-  ngOnInit() {
-
-  }
-  
   public getAcademies(e){
     if (e.target.checked) {
       console.log("entrou")
@@ -159,6 +155,12 @@ export class EditorComponent implements OnInit {
       this.currentQuestionnaire.qType = "EVALUATION";
     }
 
+    if (this.anonymous){
+      this.currentQuestionnaire.anonymous = true
+    } else {
+      this.currentQuestionnaire.anonymous = false
+    }
+
     //Add answerList empty to the questionnaire
     this.currentQuestionnaire.answerList = [];
     
@@ -178,25 +180,6 @@ export class EditorComponent implements OnInit {
     }
 
 
-    // if (this.template) {
-    //   this.currentQuestionnaire.template = true;
-    //   this.questionnaireService.createQuestionnaire(this.currentQuestionnaire).subscribe(
-    //       (msg: string) => {
-    //         console.log("Id do template:")
-    //         console.log(msg);
-    //         this.currentQuestionnaire.templateId = Number(msg);
-    //         // const questionnaireId: number = Number(msg);
-    //         // this.questionnaireService.createQuestionnaireWithAccount(questionnaireId, this.trainees).subscribe();
-    //         // console.log(questionnaireId);
-    //         console.log(this.currentQuestionnaire)
-    //       }, (error: string) => {
-    //         console.log(error);
-    //       });
-    // } 
-    
-   
-    //this.currentQuestionnaire.template = false
-
       this.questionnaireService.createQuestionnaireWithAccountId(this.currentQuestionnaire, this.template, this.selectedUsers).subscribe(
         (msg: string) => {
               console.log(msg);
@@ -207,6 +190,16 @@ export class EditorComponent implements OnInit {
             });
 
     this.currentQuestionnaire = new Questionnaire(); 
+  }
+
+  public viewStuff(users){
+    console.log(this.users)
+    this.users = [{id:6, text: "deu"}]
+    console.log(this.users)
+    //console.log(this.viewPrivacy);
+  }
+
+  ngOnInit() {
   }
 
   showToastSuccess(msg: string) {

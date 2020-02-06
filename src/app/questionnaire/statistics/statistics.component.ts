@@ -30,6 +30,7 @@ export class StatisticsComponent implements OnInit {
   private quizzesData: Questionnaire[] = [];
   private evaluation: Questionnaire;
   private visibleChart: boolean = false
+  private visibleEvaluation: boolean = false
 
   public timeRange: any = { aprovados: 0, reprovados: 0 };//
   private timeValue;//
@@ -153,6 +154,7 @@ getAllFromTemplateId(template: Questionnaire){
   console.log(template)
   if (template.qType == "QUIZ"){
     this.visibleChart = true
+    this.visibleEvaluation = false
     this.templateService.getAllQuizzesByTemplateId(template.id).subscribe(
       (data: Questionnaire[]) => {
         this.questionnaireData = data;
@@ -187,6 +189,7 @@ getAllFromTemplateId(template: Questionnaire){
     
   } else {
     this.visibleChart = false
+    this.visibleEvaluation = true
     this.templateService.getAllEvaluationsByTemplateId(template.id).subscribe(
       (data: Questionnaire[]) => {
         this.evaluations = data;

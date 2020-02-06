@@ -7,7 +7,7 @@
       [config]="{displayKey:'name', moreText:'selecionados', noResultsFound:'Não há mais resultados', placeholder:'Selecione'}"
       [options]="templateCustomArray"></ngx-select-dropdown>
   </div>
-  <div class="container mt-5">
+  <div class="container mt-5" *ngIf="visibleEvaluation">
     <div *ngFor="let question of evaluation?.questionList; let i = index;">
       <span *ngIf="question.aType == 'SINGLE_OPTION'">Questão {{i+1}} - {{question.question}} - </span>
       <span [ngStyle]="{'color': mean(i) > 3 ? 'green':'red'}"
@@ -34,7 +34,7 @@
 
 <div class="row">
 
-  <div class="col-md-6 text-center p-5" *ngIf="visibleChart" style="bottom: 0;">
+  <div class="col-md-6 text-center p-3" *ngIf="visibleChart" style="bottom: 0;">
     <h5 class="mx-auto mb-2">Duração da resolução do Questionário (Segundos)</h5>
     <div class="slidecontainer">
       <input (ngModelChange)="onTimeTrasholdChange(timeslider.value)" #timeslider [(ngModel)]="timeValue" type="range"
@@ -46,7 +46,7 @@
     </div>
   </div>
 
-  <div class="col-md-6 text-center p-5" *ngIf="visibleChart" style="bottom: 0;">
+  <div class="col-md-6 text-center p-3" *ngIf="visibleChart" style="bottom: 0;">
     <h5 class="mx-auto mb-2">Notas dos formandos(%)</h5>
     <div class="slidecontainer">
       <input (ngModelChange)="onChange(device.value)" #device [(ngModel)]="rangeValue" type="range" class="slider"

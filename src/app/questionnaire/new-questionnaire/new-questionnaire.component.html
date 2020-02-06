@@ -1,6 +1,5 @@
 <div class="container-fluid m-auto text-center" style="padding-top: 4%;">
 
-  <h1>Criador de Questionários</h1>
 
 
   <accordion [isAnimated]="true">
@@ -126,7 +125,7 @@
         </label>
         <input class="ml-5" style="width: 8%;" [(ngModel)]="begin" placeholder="Inicial" type="number">
         <input class="ml-1 mr-2" style="width: 8%;" [(ngModel)]="end" placeholder="Final" type="number">
-        <button class="btn" style="color: #eb9c63; background-color: black;"
+        <button class="btn btn-dark" style="color: #eb9c63"
           (click)="addCustomOptions(begin, end)">Gerar Opções</button>
         <span style="color: red;" [innerHTML]='customHtml' class="ml-2"></span>
       </div>
