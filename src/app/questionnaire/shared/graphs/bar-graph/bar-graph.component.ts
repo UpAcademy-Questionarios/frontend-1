@@ -56,7 +56,7 @@ export class BarGraphComponent implements OnInit {
     this.yScale = d3.scaleLinear().domain(yDomain).range([this.height, 0]);
 
     // bar colors
-    this.colors = d3.scaleLinear().domain([0, this.data.length]).range(['red', 'green'] as any[]);
+    this.colors = d3.scaleLinear().domain([0, this.data.length]).range(['red','blue', 'green'] as any[]);
 
     // x & y axis
     this.xAxis = svg.append('g')
@@ -104,7 +104,7 @@ export class BarGraphComponent implements OnInit {
       .transition()
       .delay((d, i) => i * 10)
       .attr('y', d => this.yScale(d[1]))
-      .attr('height', d => this.height - this.yScale(d[1]));
+      .attr('length', d => this.data.length - this.yScale(d[1]));
   }
 }
 

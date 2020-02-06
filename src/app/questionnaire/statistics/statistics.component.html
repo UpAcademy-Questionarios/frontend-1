@@ -16,10 +16,9 @@
   </div>
 </div>
 
-<!-- Aqui vai ficar um grafico (se o admin escolher um quiz em vez de uma avaliação) -->
-<button (click)="showStuff()"></button>
-<div class="d3BarChart">
-    <app-bar-graph *ngIf="chartData" [data]="chartData"></app-bar-graph>
+
+<div class="d3BarChart mx-5">
+    <app-bar-graph *ngIf="visibleChart" [data]="chartData"></app-bar-graph>
 </div>
 
 </div>
@@ -34,10 +33,9 @@
 
 </div>
 
-<div class="float-right" style="bottom: 0;">
+<div class="float-right" *ngIf="visibleChart" style="bottom: 0;">
 <div class="slidecontainer">
-  <input (ngModelChange)="onChange(device.value)" #device [(ngModel)]="rangeValue" type="range" min="1" max="100"
-    value="50" class="slider" id="myRange">
+  <input (ngModelChange)="onChange(device.value)" #device [(ngModel)]="rangeValue" type="range" class="slider" id="myRange">
 </div>
 <div>{{rangeValue}}</div>
 
@@ -48,16 +46,19 @@
 
 
 
-<div *ngFor="let questionnaire of questionnaireData">
+<!-- <div *ngFor="let questionnaire of questionnaireData">
   <div>{{questionnaire.name}} -- {{questionnaire.answerTime}}
   </div>
-</div>
+</div> -->
 
+
+<div class="float-left" *ngIf="visibleChart" style="bottom: 0;">
 <div class="slidecontainer">
   <input (ngModelChange)="onTimeTrasholdChange(timeslider.value)" #timeslider [(ngModel)]="timeValue" type="range"
-    min="{{minTime}}" max="{{maxTime}}" value="50" class="slider" id="myTimeRange">
+    min="{{minTime}}" max="{{maxTime}}" class="slider" id="myTimeRange">
 </div>
 <div>{{timeValue}}</div>
 <div class="d3BarChart float-right" style="bottom: 0;">
   <app-pie-graph [trashold]="timeValue" [data]="timeRange"></app-pie-graph>
+</div>
 </div>
