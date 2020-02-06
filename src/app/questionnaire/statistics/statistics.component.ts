@@ -58,11 +58,14 @@ export class StatisticsComponent implements OnInit {
           let up: number = 0;
           let down: number = 0;
 
+          questionnaireData.forEach((quest) => {
+            quest.answerTime = Math.floor(quest.answerTime / 60000);
+          })
           let timeUp: number = 0;//
           let timeDown: number = 0;//
           questionnaireData.sort((a, b) => a.answerTime - b.answerTime);//
-          this.minTime = Math.floor(questionnaireData[0].answerTime / 60000);//
-          this.maxTime = Math.floor(questionnaireData[questionnaireData.length - 1].answerTime / 60000);//
+          this.minTime = questionnaireData[0].answerTime / 60000;//
+          this.maxTime = questionnaireData[questionnaireData.length - 1].answerTime / 60000;//
           this.timeTrashold = (this.minTime + this.maxTime)/2;//
 
           questionnaireData.forEach(element => {
