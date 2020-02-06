@@ -1,47 +1,64 @@
-<p style="padding-top: 4%;" > </p>
-
-<h1>Estatísticas</h1>
+<p style="padding-top: 4%;"> </p>
 
 <div *ngIf="currentRole == 'ADMIN' || currentRole == 'SUPERUSER'" class="text-center">
-<div class="container" style="width: 35%;">
-<ngx-select-dropdown (change)="getAllFromTemplateId(temp)" [(ngModel)]="temp"
-  [config]="{displayKey:'name', moreText:'selecionados', noResultsFound:'Não há mais resultados', placeholder:'Selecione'}"
-  [options]="templateCustomArray"></ngx-select-dropdown>
-</div>
-<div class="container mt-5">
-  <div *ngFor="let question of evaluation?.questionList; let i = index;">
-    <span *ngIf="question.aType == 'SINGLE_OPTION'">Questão {{i+1}} - {{question.question}} - </span>
-    <span [ngStyle]="{'color': mean(i) > 3 ? 'green':'red'}"
-      *ngIf="question.aType == 'SINGLE_OPTION'">{{mean(i)}}/{{question.options.length}}</span>
+  <div class="container row mx-auto w-75">
+    <label class="col-2">Questionário: </label>
+    <ngx-select-dropdown class="col-10" (change)="getAllFromTemplateId(temp)" [(ngModel)]="temp"
+      [config]="{displayKey:'name', moreText:'selecionados', noResultsFound:'Não há mais resultados', placeholder:'Selecione'}"
+      [options]="templateCustomArray"></ngx-select-dropdown>
   </div>
-</div>
+  <div class="container mt-5">
+    <div *ngFor="let question of evaluation?.questionList; let i = index;">
+      <span *ngIf="question.aType == 'SINGLE_OPTION'">Questão {{i+1}} - {{question.question}} - </span>
+      <span [ngStyle]="{'color': mean(i) > 3 ? 'green':'red'}"
+        *ngIf="question.aType == 'SINGLE_OPTION'">{{mean(i)}}/{{question.options.length}}</span>
+    </div>
+  </div>
 
-
-<div class="d3BarChart mx-5">
-    <app-bar-graph *ngIf="visibleChart" [data]="chartData"></app-bar-graph>
-</div>
+  <div *ngIf="visibleChart" class="d3BarChart m-5">
+    <h5 class="mx-auto">Notas dos formandos(%)</h5>
+    <app-bar-graph [data]="chartData"></app-bar-graph>
+  </div>
 
 </div>
 
 
 <div *ngIf="currentRole == 'USER'" class="text-center">
-<div>Historico </div>
-<div *ngFor="let questionnaire of questionnaireData">
-  <div [ngStyle]="{'color': questionnare?.score > 70 ? 'green':'red'}">{{questionnaire.name}} -- {{questionnaire.score}}
+  <div>Historico </div>
+  <div *ngFor="let questionnaire of questionnaireData">
+    <div [ngStyle]="{'color': questionnare?.score > 70 ? 'green':'red'}">{{questionnaire.name}} --
+      {{questionnaire.score}}
+    </div>
   </div>
 </div>
 
-</div>
+<div class="row">
 
-<div class="float-right" *ngIf="visibleChart" style="bottom: 0;">
-<div class="slidecontainer">
-  <input (ngModelChange)="onChange(device.value)" #device [(ngModel)]="rangeValue" type="range" class="slider" id="myRange">
-</div>
-<div>{{rangeValue}}</div>
+  <div class="col-md-6 text-center p-5" *ngIf="visibleChart" style="bottom: 0;">
+    <h5 class="mx-auto mb-2">Duração da resolução do Questionário (Segundos)</h5>
+    <div class="slidecontainer">
+      <input (ngModelChange)="onTimeTrasholdChange(timeslider.value)" #timeslider [(ngModel)]="timeValue" type="range"
+        min="{{minTime}}" max="{{maxTime}}" value="5" class="slider" id="myTimeRange">
+    </div>
+    <div>{{timeValue}}</div>
+    <div class="d3BarChart float-right" style="bottom: 0;">
+      <app-pie-graph [trashold]="timeValue" [data]="timeRange"></app-pie-graph>
+    </div>
+  </div>
 
-<div class="d3BarChart">
-  <app-pie-graph [trashold]="rangeValue" [data]="passedScore"></app-pie-graph>
-</div>
+  <div class="col-md-6 text-center p-5" *ngIf="visibleChart" style="bottom: 0;">
+    <h5 class="mx-auto mb-2">Notas dos formandos(%)</h5>
+    <div class="slidecontainer">
+      <input (ngModelChange)="onChange(device.value)" #device [(ngModel)]="rangeValue" type="range" class="slider"
+        id="myRange">
+    </div>
+    <div>{{rangeValue}}</div>
+    <div class="d3BarChart">
+      <app-pie-graph [trashold]="rangeValue" [data]="passedScore"></app-pie-graph>
+    </div>
+    
+  </div>
+
 </div>
 
 
@@ -52,13 +69,3 @@
 </div> -->
 
 
-<div class="float-left" *ngIf="visibleChart" style="bottom: 0;">
-<div class="slidecontainer">
-  <input (ngModelChange)="onTimeTrasholdChange(timeslider.value)" #timeslider [(ngModel)]="timeValue" type="range"
-    min="{{minTime}}" max="{{maxTime}}" value="5" class="slider" id="myTimeRange">
-</div>
-<div>{{timeValue}}</div>
-<div class="d3BarChart float-right" style="bottom: 0;">
-  <app-pie-graph [trashold]="timeValue" [data]="timeRange"></app-pie-graph>
-</div>
-</div>
