@@ -36,7 +36,7 @@ export class ToAnswerComponent implements OnInit {
         this.startingTime = new Date().getTime();
         this.currentQuestionnaire = currentQuestionnaire;
         for (let i = 0; i < this.currentQuestionnaire.questionList.length; i++) {
-          let answer: Answer = new Answer({questionnaireId: this.currentQuestionnaire.id, answer: [], questionId: this.currentQuestionnaire.questionList[i].id, orderNumber: 1 + 1});
+          let answer: Answer = new Answer({questionnaireId: this.currentQuestionnaire.id, answer: [], questionId: this.currentQuestionnaire.questionList[i].id, orderNumber: i + 1});
           this.currentQuestionnaire.answerList.push(answer);
         }
       });

@@ -13,6 +13,24 @@
     <input (ngModelChange)="onChange(device.value)" #device [(ngModel)]="rangeValue" type="range" min="1" max="100" value="50" class="slider" id="myRange">
   </div>
   <div>{{rangeValue}}</div>
+  
   <div class="d3BarChart float-right" style="bottom: 0;">
     <app-pie-graph  [trashold]="rangeValue" [data]="passedScore"></app-pie-graph>
+  </div>
+
+  <div *ngIf="currentRole == 'ADMIN' || currentRole == 'SUPERUSER'">
+    <div *ngFor="let template of templates; let i = index;">
+      <p>{{i+1}}</p>
+      <a (click)="getAllFromTemplateId(template)" >{{template.name}}</a>
+    </div>
+
+    <div *ngFor="let question of evaluation?.questionList; let i = index;">
+      <span *ngIf="question.aType == 'SINGLE_OPTION'">Questão {{i+1}} - {{question.question}}</span>
+      <button (click)="mean(i)"></button>
+      <span [ngStyle]="{'color': mean(i) > 3 ? 'green':'red'}" *ngIf="question.aType == 'SINGLE_OPTION'">{{mean(i)}}</span>
+      
+
+
+    </div>
+
   </div>

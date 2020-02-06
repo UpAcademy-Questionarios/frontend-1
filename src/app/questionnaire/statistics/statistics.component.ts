@@ -22,7 +22,9 @@ export class StatisticsComponent implements OnInit {
   private trashold: number = 50;
   private templates: Questionnaire[];
   private currentRole: string;
-
+  private evaluations: Questionnaire[] = [];
+  private quizzesData: Questionnaire[] = [];
+  private evaluation: Questionnaire;
 
   constructor(
     private route: ActivatedRoute,
@@ -51,6 +53,7 @@ export class StatisticsComponent implements OnInit {
     } else {
       this.templateService.getAllTemplates()
       this.templates = templateService.templates
+      console.log(templateService.templates)
     }
   }
 
@@ -88,4 +91,42 @@ export class StatisticsComponent implements OnInit {
     this.passedScore = { aprovados: 1, reprovados: 2 }
   }
 
+
+getAllFromTemplateId(template: Questionnaire){
+  console.log(template)
+  if (template.qType == "QUIZ"){
+    this.templateService.getAllQuizzesByTemplateId(template.id).subscribe(
+      (data: Questionnaire[]) => {
+        this.quizzesData = data;
+        console.log("quizz data")
+        console.log(data)
+        });
+    
+  } else {
+    this.templateService.getAllEvaluationsByTemplateId(template.id).subscribe(
+      (data: Questionnaire[]) => {
+        this.evaluations = data;
+        console.log(this.evaluations)
+        this.evaluations.map(  (element) => {
+          element.questionList.sort( (a,b) => (a.orderNumber < b.orderNumber)? -1 : 1);
+          element.answerList.sort( (a,b) => (a.orderNumber < b.orderNumber)? -1 : 1);
+        });
+        this.evaluation = data[0]
+        console.log("evaluation data")
+        console.log(data)
+        console.log(this.evaluations)
+        });
+  }
+}
+  mean(i: number){
+    let sum = 0
+    let indexes = 0
+    this.evaluations.forEach(element => {
+      console.log(element.answerList[i].answer)
+      sum += Number(element.answerList[i].answer) + 1
+    });
+
+    console.log(sum)
+    return (sum / this.evaluations.length).toFixed(1)
+  }
 }
