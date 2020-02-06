@@ -55,7 +55,7 @@
 <div class="float-left" *ngIf="visibleChart" style="bottom: 0;">
 <div class="slidecontainer">
   <input (ngModelChange)="onTimeTrasholdChange(timeslider.value)" #timeslider [(ngModel)]="timeValue" type="range"
-    min="{{minTime}}" max="{{maxTime}}" class="slider" id="myTimeRange">
+    min="{{minTime}}" max="{{maxTime}}" value="5" class="slider" id="myTimeRange">
 </div>
 <div>{{timeValue}}</div>
 <div class="d3BarChart float-right" style="bottom: 0;">
