@@ -29,6 +29,7 @@ export class StatisticsComponent implements OnInit {
   private evaluations: Questionnaire[] = [];
   private quizzesData: Questionnaire[] = [];
   private evaluation: Questionnaire;
+  private visibleChart: boolean = false
 
   public timeRange: any = { fast: 0, slow: 0 };//
   private timeValue;//
@@ -36,7 +37,7 @@ export class StatisticsComponent implements OnInit {
   public minTime: number = 0;
   public maxTime: number = 0;
 
-  private chartData: any[] = ['Jorge', 80, 'Ed', 75, 'Marta', 65, 'Raquel', 10];
+  private chartData: any[] = ['Jorge', 80, 'Ed', 75];
 
   constructor(
     private route: ActivatedRoute,
@@ -108,18 +109,32 @@ export class StatisticsComponent implements OnInit {
     console.log(trashold)
     let up: number = 0
     let down: number = 0
+    if (this.currentRole == "USER"){
     for (let i = 0; i < this.questionnaireData.length; i++) {
       (this.questionnaireData[i].score > trashold) ? up += 1 : down += 1;
     }
+  } else {
+    for (let i = 0; i < this.questionnaireData.length; i++) {
+      (this.questionnaireData[i].score > trashold) ? up += 1 : down += 1;
+    }
+  }
     this.passedScore = { aprovados: up, reprovados: down };
+
   }
 
   onTimeTrasholdChange(timeTrashold) {//
+    console.log(timeTrashold)
     let timeUp: number = 0;
     let timeDown: number = 0;
+    if (this.currentRole == "USER"){
     for (let i = 0; i < this.questionnaireData.length; i++) {
       (this.questionnaireData[i].answerTime > timeTrashold) ? timeUp += 1 : timeDown += 1;
     }
+  } else {
+    for (let i = 0; i < this.questionnaireData.length; i++) {
+      (this.questionnaireData[i].answerTime > timeTrashold) ? timeUp += 1 : timeDown += 1;
+    }
+  }
     this.timeRange = { fast: timeUp, slow: timeDown };
   }
 
@@ -127,7 +142,7 @@ export class StatisticsComponent implements OnInit {
 
   showStuff() {
     //testes
-    this.chartData = [['Jorge', 8000],['Jorge', 90], ['Ed', 750], ['Marta', 650], ['Raquel', 100], ['Raquel', 100], ['Raquel', 100], ['Raquel', 100], ['Raquel', 100], ['Raquel', 100], ['Raquel', 100], ['Raquel', 100]];
+    this.chartData = [['Jorge Antunes', 90], ['Ed', 75], ['Marta', 65], ['Raquel', 10], ['Bruno', 50]];
   
 
     
@@ -137,14 +152,32 @@ export class StatisticsComponent implements OnInit {
 getAllFromTemplateId(template: Questionnaire){
   console.log(template)
   if (template.qType == "QUIZ"){
+    this.visibleChart = true
     this.templateService.getAllQuizzesByTemplateId(template.id).subscribe(
       (data: Questionnaire[]) => {
-        this.quizzesData = data;
-        console.log("quizz data")
-        console.log(data)
+        this.questionnaireData = data;
+        let up: number = 0;
+        let down: number = 0;
+        let temporaryArray = []
+        let timeUp: number = 0;//
+        let timeDown: number = 0;//
+        data.sort((a, b) => a.answerTime - b.answerTime);//
+        this.minTime = Math.floor(data[0].answerTime / 60000);//
+        this.maxTime = Math.floor(data[data.length - 1].answerTime / 60000);//
+        this.timeTrashold = (this.minTime + this.maxTime)/2;//
+        data.forEach(element => {
+          (element.score > this.trashold) ? up += 1 : down += 1;
+          this.passedScore = { aprovados: up, reprovados: down };
+          (element.answerTime > this.timeTrashold) ? timeUp +=1 : timeDown +=1;//
+          this.timeRange = { fast: timeUp, slow: timeDown };//
+          temporaryArray.push([element.userName, element.score]);
+          this.chartData = temporaryArray;
+        });
+
         });
     
   } else {
+    this.visibleChart = false
     this.templateService.getAllEvaluationsByTemplateId(template.id).subscribe(
       (data: Questionnaire[]) => {
         this.evaluations = data;
