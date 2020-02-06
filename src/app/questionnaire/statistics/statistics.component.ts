@@ -26,6 +26,12 @@ export class StatisticsComponent implements OnInit {
   private templates: Questionnaire[];
   private currentRole: string;
 
+  public timeRange: any = { fast: 0, slow: 0 };//
+  private timeValue;//
+  private timeTrashold: number = 0;//
+  public minTime: number = 0;
+  public maxTime: number = 0;
+
 
   constructor(
     private route: ActivatedRoute,
@@ -42,11 +48,24 @@ export class StatisticsComponent implements OnInit {
       ).subscribe(
         (questionnaireData: Questionnaire[]) => {
           this.questionnaireData = questionnaireData;
+          console.log(this.questionnaireData);
+          
           let up: number = 0;
           let down: number = 0;
+
+          let timeUp: number = 0;//
+          let timeDown: number = 0;//
+          questionnaireData.sort((a, b) => a.answerTime - b.answerTime);//
+          this.minTime = Math.floor(questionnaireData[0].answerTime / 60000);//
+          this.maxTime = Math.floor(questionnaireData[questionnaireData.length - 1].answerTime / 60000);//
+          this.timeTrashold = (this.minTime + this.maxTime)/2;//
+
           questionnaireData.forEach(element => {
-            (element.score > this.trashold) ? up += 1 : down += 1
-            this.passedScore = { aprovados: up, reprovados: down }
+            (element.score > this.trashold) ? up += 1 : down += 1;
+            this.passedScore = { aprovados: up, reprovados: down };
+
+            (element.answerTime > this.timeTrashold) ? timeUp +=1 : timeDown +=1;//
+            this.timeRange = { fast: timeUp, slow: timeDown };//
           });
 
         }
@@ -84,6 +103,17 @@ export class StatisticsComponent implements OnInit {
     }
     this.passedScore = { aprovados: up, reprovados: down };
   }
+
+  onTimeTrasholdChange(timeTrashold) {//
+    let timeUp: number = 0;
+    let timeDown: number = 0;
+    for (let i = 0; i < this.questionnaireData.length; i++) {
+      (this.questionnaireData[i].answerTime > timeTrashold) ? timeUp += 1 : timeDown += 1;
+    }
+    this.timeRange = { fast: timeUp, slow: timeDown };
+  }
+
+
 
   showStuff() {
     console.log(this.questionnaireData)
